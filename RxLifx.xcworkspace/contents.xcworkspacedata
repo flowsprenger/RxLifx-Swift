@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:RxLifxApi/RxLifxApi.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RxLifx/RxLifx.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LifxDomain/LifxDomain.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RxLifxExample/RxLifxExample.xcodeproj">
+   </FileRef>
+</Workspace>
