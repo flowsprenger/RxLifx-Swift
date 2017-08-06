@@ -16,7 +16,6 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
 public class Header {
 
     public static let _size = 36
@@ -552,6 +551,35 @@ public class GetLocation : MessagePayload {
     }
 
 }
+public class SetLocation : MessagePayload {
+
+    public static let _size = 56
+    public let _size = 56
+    public let _type:UInt16 = 49
+
+    public var location:[UInt8]
+    public var label:String
+    public var updated_at:UInt64
+
+    public init(location:[UInt8], label:String, updated_at:UInt64){
+        self.location = location
+        self.label = label
+        self.updated_at = updated_at
+    }
+
+    public init(stream:DataInputStream){
+        location = stream.readArray(size: 16, generator:{stream in return stream.readByte()})
+        label = stream.readString(size: 32)
+        updated_at = stream.readLong()
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeArray(value: location, writer:{location, stream in return stream.writeByte(value:location)})
+        stream.writeString(value: label, size:32)
+        stream.writeLong(value:updated_at)
+    }
+
+}
 public class StateLocation : MessagePayload {
 
     public static let _size = 56
@@ -595,6 +623,35 @@ public class GetGroup : MessagePayload {
     }
 
     public func emit(stream:DataOutputStream){
+    }
+
+}
+public class SetGroup : MessagePayload {
+
+    public static let _size = 56
+    public let _size = 56
+    public let _type:UInt16 = 52
+
+    public var group:[UInt8]
+    public var label:String
+    public var updated_at:UInt64
+
+    public init(group:[UInt8], label:String, updated_at:UInt64){
+        self.group = group
+        self.label = label
+        self.updated_at = updated_at
+    }
+
+    public init(stream:DataInputStream){
+        group = stream.readArray(size: 16, generator:{stream in return stream.readByte()})
+        label = stream.readString(size: 32)
+        updated_at = stream.readLong()
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeArray(value: group, writer:{group, stream in return stream.writeByte(value:group)})
+        stream.writeString(value: label, size:32)
+        stream.writeLong(value:updated_at)
     }
 
 }
@@ -1002,7 +1059,7 @@ public class StateMultiZone : MessagePayload {
 
     public static let _size = 66
     public let _size = 66
-    public let _type:UInt16 = 504
+    public let _type:UInt16 = 506
 
     public var count:UInt8
     public var index:UInt8
@@ -1068,8 +1125,10 @@ public enum MessageType : UInt16 {
     case StateInfo = 35
     case Acknowledgement = 45
     case GetLocation = 48
+    case SetLocation = 49
     case StateLocation = 50
     case GetGroup = 51
+    case SetGroup = 52
     case StateGroup = 53
     case EchoRequest = 58
     case EchoResponse = 59
@@ -1089,44 +1148,46 @@ public enum MessageType : UInt16 {
 }
 
 public let MessagePayloadFromType : [UInt16:(DataInputStream) -> MessagePayload] = [
-        2 : { stream in GetService(stream:stream) },
-        3 : { stream in StateService(stream:stream) },
-        12 : { stream in GetHostInfo(stream:stream) },
-        13 : { stream in StateHostInfo(stream:stream) },
-        14 : { stream in GetHostFirmware(stream:stream) },
-        15 : { stream in StateHostFirmware(stream:stream) },
-        16 : { stream in GetWifiInfo(stream:stream) },
-        17 : { stream in StateWifiInfo(stream:stream) },
-        18 : { stream in GetWifiFirmware(stream:stream) },
-        19 : { stream in StateWifiFirmware(stream:stream) },
-        20 : { stream in GetPower(stream:stream) },
-        21 : { stream in SetPower(stream:stream) },
-        22 : { stream in StatePower(stream:stream) },
-        23 : { stream in GetLabel(stream:stream) },
-        24 : { stream in SetLabel(stream:stream) },
-        25 : { stream in StateLabel(stream:stream) },
-        32 : { stream in GetVersion(stream:stream) },
-        33 : { stream in StateVersion(stream:stream) },
-        34 : { stream in GetInfo(stream:stream) },
-        35 : { stream in StateInfo(stream:stream) },
-        45 : { stream in Acknowledgement(stream:stream) },
-        48 : { stream in GetLocation(stream:stream) },
-        50 : { stream in StateLocation(stream:stream) },
-        51 : { stream in GetGroup(stream:stream) },
-        53 : { stream in StateGroup(stream:stream) },
-        58 : { stream in EchoRequest(stream:stream) },
-        59 : { stream in EchoResponse(stream:stream) },
-        101 : { stream in LightGet(stream:stream) },
-        102 : { stream in LightSetColor(stream:stream) },
-        107 : { stream in LightState(stream:stream) },
-        116 : { stream in LightGetPower(stream:stream) },
-        117 : { stream in LightSetPower(stream:stream) },
-        118 : { stream in LightStatePower(stream:stream) },
-        120 : { stream in GetInfrared(stream:stream) },
-        121 : { stream in StateInfrared(stream:stream) },
-        122 : { stream in SetInfrared(stream:stream) },
-        501 : { stream in SetColorZones(stream:stream) },
-        502 : { stream in GetColorZones(stream:stream) },
-        503 : { stream in StateZone(stream:stream) },
-        506 : { stream in StateMultiZone(stream:stream) },
+    2 : { stream in GetService(stream:stream) },
+    3 : { stream in StateService(stream:stream) },
+    12 : { stream in GetHostInfo(stream:stream) },
+    13 : { stream in StateHostInfo(stream:stream) },
+    14 : { stream in GetHostFirmware(stream:stream) },
+    15 : { stream in StateHostFirmware(stream:stream) },
+    16 : { stream in GetWifiInfo(stream:stream) },
+    17 : { stream in StateWifiInfo(stream:stream) },
+    18 : { stream in GetWifiFirmware(stream:stream) },
+    19 : { stream in StateWifiFirmware(stream:stream) },
+    20 : { stream in GetPower(stream:stream) },
+    21 : { stream in SetPower(stream:stream) },
+    22 : { stream in StatePower(stream:stream) },
+    23 : { stream in GetLabel(stream:stream) },
+    24 : { stream in SetLabel(stream:stream) },
+    25 : { stream in StateLabel(stream:stream) },
+    32 : { stream in GetVersion(stream:stream) },
+    33 : { stream in StateVersion(stream:stream) },
+    34 : { stream in GetInfo(stream:stream) },
+    35 : { stream in StateInfo(stream:stream) },
+    45 : { stream in Acknowledgement(stream:stream) },
+    48 : { stream in GetLocation(stream:stream) },
+    49 : { stream in SetLocation(stream:stream) },
+    50 : { stream in StateLocation(stream:stream) },
+    51 : { stream in GetGroup(stream:stream) },
+    52 : { stream in SetGroup(stream:stream) },
+    53 : { stream in StateGroup(stream:stream) },
+    58 : { stream in EchoRequest(stream:stream) },
+    59 : { stream in EchoResponse(stream:stream) },
+    101 : { stream in LightGet(stream:stream) },
+    102 : { stream in LightSetColor(stream:stream) },
+    107 : { stream in LightState(stream:stream) },
+    116 : { stream in LightGetPower(stream:stream) },
+    117 : { stream in LightSetPower(stream:stream) },
+    118 : { stream in LightStatePower(stream:stream) },
+    120 : { stream in GetInfrared(stream:stream) },
+    121 : { stream in StateInfrared(stream:stream) },
+    122 : { stream in SetInfrared(stream:stream) },
+    501 : { stream in SetColorZones(stream:stream) },
+    502 : { stream in GetColorZones(stream:stream) },
+    503 : { stream in StateZone(stream:stream) },
+    506 : { stream in StateMultiZone(stream:stream) },
 ]

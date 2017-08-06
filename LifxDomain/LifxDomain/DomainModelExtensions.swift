@@ -19,49 +19,49 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
 import Foundation
 
-public extension Header{
-    public static let LIFX_DEFAULT_PORT:UInt16 = 56700
-    public static let LIFX_PROTOCOL:UInt16 = 1024
-    public static let RESPONSE_REQUIRED:UInt8 = 0x1;
-    public static let ACK_REQUIRED:UInt8 = 0x2;
+public extension Header {
+    public static let LIFX_DEFAULT_PORT: UInt16 = 56700
+    public static let LIFX_PROTOCOL: UInt16 = 1024
+    public static let RESPONSE_REQUIRED: UInt8 = 0x1;
+    public static let ACK_REQUIRED: UInt8 = 0x2;
 
-    public var id:String{
-        get{
+    public var id: String {
+        get {
             return self.target.toLightId()
         }
     }
 
-    public func setBroadcast(){
+    public func setBroadcast() {
         self.target = 0
         self.protocolOriginTagged = Header.LIFX_PROTOCOL | UInt16(1 << 13) | UInt16(1 << 12)
     }
 
-    public func setTarget(target:UInt64){
+    public func setTarget(target: UInt64) {
         self.target = target
         self.protocolOriginTagged = Header.LIFX_PROTOCOL | UInt16(1 << 12)
     }
 
-    public var responseRequired:Bool{
-        get{
+    public var responseRequired: Bool {
+        get {
             return (flags & Header.RESPONSE_REQUIRED) != 0
         }
-        set{
-            if(newValue){
+        set {
+            if (newValue) {
                 flags = flags | Header.RESPONSE_REQUIRED
-            }else{
+            } else {
                 flags = flags & ~Header.RESPONSE_REQUIRED
             }
         }
     }
 
-    public var ackRequired:Bool{
-        get{
+    public var ackRequired: Bool {
+        get {
             return (flags & Header.ACK_REQUIRED) != 0
         }
-        set{
-            if(newValue){
+        set {
+            if (newValue) {
                 flags = flags | Header.ACK_REQUIRED
-            }else{
+            } else {
                 flags = flags & ~Header.ACK_REQUIRED
             }
         }
@@ -69,9 +69,9 @@ public extension Header{
 }
 
 extension UInt64 {
-    public func toLightId() -> String{
+    public func toLightId() -> String {
         let id = String(self.byteSwapped, radix: 16, uppercase: false)
-        return id.substring(to: id.index(id.startIndex, offsetBy: Swift.min(12, id.distance(from: id.startIndex, to:id.endIndex))))
+        return id.substring(to: id.index(id.startIndex, offsetBy: Swift.min(12, id.distance(from: id.startIndex, to: id.endIndex))))
     }
 }
 
@@ -88,5 +88,17 @@ extension HSBK: Equatable {
                 lhs.saturation == rhs.saturation &&
                 lhs.brightness == rhs.brightness &&
                 lhs.kelvin == rhs.kelvin
+    }
+}
+
+extension Array {
+    public func pad(length: Int, e: Element) -> Array {
+       if(self.count == length){
+           return self
+       }else if(self.count > length){
+           return Array(self.dropLast(self.count - length))
+       }else{
+           return self + Array(repeating: e, count: length - self.count)
+       }
     }
 }

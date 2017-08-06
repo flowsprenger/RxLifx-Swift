@@ -28,11 +28,13 @@
 		DD1E185C26197C2FE8470C1A /* LightSetColorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E145C01A92FB657A3682B /* LightSetColorCommand.swift */; };
 		DD1E1901FF3DB5C1AECDF3CB /* DeviceGetLabelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1E8DC6BBCAEC2629F74F /* DeviceGetLabelCommand.swift */; };
 		DD1E1943E3BDA5421C763AC5 /* DeviceSetLabelCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E13CB630DB1F0155FA3F6 /* DeviceSetLabelCommand.swift */; };
+		DD1E19A3A6E01146319DACF1 /* DeviceSetLocationCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1B1A58BC5AF00E516015 /* DeviceSetLocationCommand.swift */; };
 		DD1E1C0531D2F9BF3EA5FCC1 /* BroadcastGetServiceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E14C9E30BFD2B5012FBBE /* BroadcastGetServiceCommand.swift */; };
 		DD1E1CC3ECFBB0094EAE39BD /* DeviceGetPowerCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E143567CF739DE734FCC9 /* DeviceGetPowerCommand.swift */; };
 		DD1E1D61EA48883B0F305AB6 /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E15D8C9D90620FE5F289E /* Light.swift */; };
 		DD1E1DAEBB9E6F63AF398431 /* LightMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1BFB3F040ED8B2E8E199 /* LightMessageGenerator.swift */; };
 		DD1E1E10A94087217579D559 /* DeviceGetVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1EF9499D447143BF11E1 /* DeviceGetVersionCommand.swift */; };
+		DD1E1E2B03A5621D8040637B /* DeviceSetGroupCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1CE4D0BAA8E2B9677091 /* DeviceSetGroupCommand.swift */; };
 		DD1E1E4E4DD8DE636DDE894A /* LightGetInfraredCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1BE694E5DC5A2C30FD31 /* LightGetInfraredCommand.swift */; };
 		DD1E1E760A41013E4FAE377D /* LightGetPowerCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E104A10ED23428C126016 /* LightGetPowerCommand.swift */; };
 		DD1E1FA3469D9E3E25DFC158 /* MultiZoneSetColorZonesCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1872C312547B55B948C2 /* MultiZoneSetColorZonesCommand.swift */; };
@@ -77,10 +79,12 @@
 		DD1E18DA77F9BEDFDC8E66A0 /* LightGetCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightGetCommand.swift; sourceTree = "<group>"; };
 		DD1E19E356E49FB74D5851A6 /* AsyncLightCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncLightCommand.swift; sourceTree = "<group>"; };
 		DD1E1B19805DC3FAFC4C9F4C /* DeviceGetLocationCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceGetLocationCommand.swift; sourceTree = "<group>"; };
+		DD1E1B1A58BC5AF00E516015 /* DeviceSetLocationCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSetLocationCommand.swift; sourceTree = "<group>"; };
 		DD1E1BE694E5DC5A2C30FD31 /* LightGetInfraredCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightGetInfraredCommand.swift; sourceTree = "<group>"; };
 		DD1E1BFB3F040ED8B2E8E199 /* LightMessageGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightMessageGenerator.swift; sourceTree = "<group>"; };
 		DD1E1C58FDF9CC69362DE34D /* LightSetPowerCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightSetPowerCommand.swift; sourceTree = "<group>"; };
 		DD1E1CD9659325572AAE6ECA /* MultiZoneGetColorZonesCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiZoneGetColorZonesCommand.swift; sourceTree = "<group>"; };
+		DD1E1CE4D0BAA8E2B9677091 /* DeviceSetGroupCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSetGroupCommand.swift; sourceTree = "<group>"; };
 		DD1E1E8DC6BBCAEC2629F74F /* DeviceGetLabelCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceGetLabelCommand.swift; sourceTree = "<group>"; };
 		DD1E1EF9499D447143BF11E1 /* DeviceGetVersionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceGetVersionCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,6 +186,8 @@
 				DD1E12162FEACB496D6BD2B9 /* LightSetInfraredCommand.swift */,
 				DD1E1872C312547B55B948C2 /* MultiZoneSetColorZonesCommand.swift */,
 				DD1E1CD9659325572AAE6ECA /* MultiZoneGetColorZonesCommand.swift */,
+				DD1E1B1A58BC5AF00E516015 /* DeviceSetLocationCommand.swift */,
+				DD1E1CE4D0BAA8E2B9677091 /* DeviceSetGroupCommand.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -320,6 +326,8 @@
 				DD1E1289E5231719D7D1C2CA /* LightSetInfraredCommand.swift in Sources */,
 				DD1E1FA3469D9E3E25DFC158 /* MultiZoneSetColorZonesCommand.swift in Sources */,
 				DD1E1616584F6F012FDD3E61 /* MultiZoneGetColorZonesCommand.swift in Sources */,
+				DD1E19A3A6E01146319DACF1 /* DeviceSetLocationCommand.swift in Sources */,
+				DD1E1E2B03A5621D8040637B /* DeviceSetGroupCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

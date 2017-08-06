@@ -90,13 +90,13 @@ setColorCommand..subscribe(onNext: { (Result<LightState>) in print("result recei
 ```
 
 
-## RxLifExample
+## RxLifxExample
 
 Very simple sample app using LifxDomain, RxLifx and RxLifxApi
 
 ## Installation
 
-### RxLifExample
+### RxLifxExample
 
 Checkout this repo and bootstrap dependencies using Carthage
 
