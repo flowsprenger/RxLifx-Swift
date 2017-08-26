@@ -57,7 +57,7 @@ public class UdpTransport<T:MessageGenerator> {
 
                             var result = socket.receive(requestBuffer: &requestBuffer, requestLength: bufferPosition, bufferSize: bufferSize)
                             while case let .Success(receiveResult) = result {
-                                if let message = self.generator.generate(from: receiveResult.fromAddr, data: Data(bytes: requestBuffer[0 ... receiveResult.bytesRead])){
+                                if let message = self.generator.generate(from: receiveResult.fromAddr, data: Data(bytes: requestBuffer[0 ..< receiveResult.bytesRead])){
                                     observer.onNext(message)
                                 }
 

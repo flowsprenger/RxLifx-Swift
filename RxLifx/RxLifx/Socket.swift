@@ -156,7 +156,7 @@ class UdpSocket {
         return (value << 8) + (value >> 8);
     }
 
-    func writeMessage(socketDescriptor: Int32, addr: inout sockaddr, data: Data) {
+    func writeMessage(socketDescriptor: Int32, addr: inout sockaddr, data: Data) -> Int{
 
         return data.withUnsafeBytes { bytes in
             return sendto(socketDescriptor, bytes, data.count, 0, &addr, socklen_t(addr.sa_len))
