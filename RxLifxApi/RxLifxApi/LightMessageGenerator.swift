@@ -22,17 +22,17 @@ import RxLifx
 import LifxDomain
 
 public class LightMessageGenerator : MessageGenerator{
-    public func generate(from: sockaddr, data:Data) -> SourcedMessage{
-
+    public func generate(from: sockaddr, data:Data) -> SourcedMessage?{
         let stream = DataInputStream(data: data)
-        let header = Header(stream: stream)
 
-        if let payloadGenerator = MessagePayloadFromType[header.type] {
-            let payload = payloadGenerator(stream)
-            return SourcedMessage(sourceAddress: from, message: Message(header: header, payload: payload))
-        } else {
-            return SourcedMessage(sourceAddress: from, message: Message(header: header, payload: UnknownPayload()))
+        if let header = Header(stream: stream){
+            if let payloadGenerator = MessagePayloadFromType[header.type], let payload = payloadGenerator(stream) {
+                return SourcedMessage(sourceAddress: from, message: Message(header: header, payload: payload))
+            } else {
+                return SourcedMessage(sourceAddress: from, message: Message(header: header, payload: UnknownPayload()))
+            }
         }
+        return nil
     }
 }
 

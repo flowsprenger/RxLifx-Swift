@@ -19,6 +19,11 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
 import Foundation
 
+enum DataStreamError: Error{
+    case outOfBounds
+    case uninitialized
+}
+
 public class DataInputStream {
     private var pos: Int = 0
     private let data: Data
@@ -27,42 +32,46 @@ public class DataInputStream {
         self.data = data
     }
 
-    func readByte() -> UInt8 {
+    func readByte() throws -> UInt8 {
+        if(pos >= data.count){
+            throw DataStreamError.outOfBounds
+        }
+
         let value = data[pos]
         pos += 1
         return value
     }
 
-    func readShort() -> UInt16 {
-        let value = UInt16(readByte()) | (UInt16(readByte()) << 8)
+    func readShort() throws -> UInt16 {
+        let value = try UInt16(readByte()) | (UInt16(readByte()) << 8)
         return value
     }
 
-    func readWord() -> UInt32 {
-        let value = UInt32(readShort()) | (UInt32(readShort()) << 16)
+    func readWord() throws -> UInt32 {
+        let value = try UInt32(readShort()) | (UInt32(readShort()) << 16)
         return value
     }
 
-    func readFloat() -> Float32 {
-        return Float32(bitPattern: readWord())
+    func readFloat() throws -> Float32 {
+        return try Float32(bitPattern: readWord())
     }
 
-    func readLong() -> UInt64 {
-        let value = UInt64(readWord()) | (UInt64(readWord()) << 32)
+    func readLong() throws -> UInt64 {
+        let value = try UInt64(readWord()) | (UInt64(readWord()) << 32)
         return value
     }
 
-    func readString(size:Int) -> String {
+    func readString(size:Int) throws -> String {
         var s = String()
         for _ in 0..<size{
-            s.append(Character(UnicodeScalar(readByte())))
+            try s.append(Character(UnicodeScalar(readByte())))
         }
         return s
     }
 
-    func readArray<T>(size: Int, generator: @escaping (DataInputStream) -> (T)) -> [T] {
-        return (0 ..< size).map {
-            _ in generator(self)
+    func readArray<T>(size: Int, generator: @escaping (DataInputStream) throws -> (T)) throws -> [T] {
+        return try (0 ..< size).map {
+            _ in try generator(self)
         }
     }
 
@@ -120,4 +129,11 @@ public class DataOutputStream
     func finalize() -> Data{
         return data
     }
+}
+
+func throwIfNil<T: Any>(guarded: T?) throws -> T{
+    guard let guarded = guarded else{
+        throw DataStreamError.uninitialized
+    }
+    return guarded
 }

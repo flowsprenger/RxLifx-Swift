@@ -57,8 +57,9 @@ public class UdpTransport<T:MessageGenerator> {
 
                             var result = socket.receive(requestBuffer: &requestBuffer, requestLength: bufferPosition, bufferSize: bufferSize)
                             while case let .Success(receiveResult) = result {
-                                let message = self.generator.generate(from: receiveResult.fromAddr, data: Data(bytes: requestBuffer[0 ... receiveResult.bytesRead]))
-                                observer.onNext(message)
+                                if let message = self.generator.generate(from: receiveResult.fromAddr, data: Data(bytes: requestBuffer[0 ... receiveResult.bytesRead])){
+                                    observer.onNext(message)
+                                }
 
                                 result = socket.receive(requestBuffer: &requestBuffer, requestLength: bufferPosition, bufferSize: bufferSize)
                             }
@@ -98,7 +99,7 @@ public class UdpTransport<T:MessageGenerator> {
 public protocol MessageGenerator: class {
     associatedtype TM
 
-    func generate(from: sockaddr, data: Data) -> TM
+    func generate(from: sockaddr, data: Data) -> TM?
 }
 
 public struct TargetedData{

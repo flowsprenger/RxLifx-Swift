@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		107C08871E23989500552E9F /* LifxDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 107C087D1E23989500552E9F /* LifxDomain.framework */; };
-		107C088C1E23989500552E9F /* LifxDomainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107C088B1E23989500552E9F /* LifxDomainTests.swift */; };
+		107C088C1E23989500552E9F /* DataInputStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107C088B1E23989500552E9F /* DataInputStreamTests.swift */; };
 		107C088E1E23989600552E9F /* LifxDomain.h in Headers */ = {isa = PBXBuildFile; fileRef = 107C08801E23989500552E9F /* LifxDomain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		107C08A41E23994C00552E9F /* DomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107C08A31E23994C00552E9F /* DomainModel.swift */; };
 		107C08A61E23996100552E9F /* DataStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107C08A51E23996100552E9F /* DataStreams.swift */; };
@@ -31,7 +31,7 @@
 		107C08801E23989500552E9F /* LifxDomain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LifxDomain.h; sourceTree = "<group>"; };
 		107C08811E23989500552E9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		107C08861E23989500552E9F /* LifxDomainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifxDomainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		107C088B1E23989500552E9F /* LifxDomainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifxDomainTests.swift; sourceTree = "<group>"; };
+		107C088B1E23989500552E9F /* DataInputStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInputStreamTests.swift; sourceTree = "<group>"; };
 		107C088D1E23989600552E9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		107C08A11E23993900552E9F /* RxLifx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxLifx.framework; path = "../../../Library/Developer/Xcode/DerivedData/RxLifx-dhhbjuuutiyklddmrqllkyqirybj/Build/Products/Debug-iphonesimulator/RxLifx.framework"; sourceTree = "<group>"; };
 		107C08A31E23994C00552E9F /* DomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainModel.swift; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 		107C088A1E23989500552E9F /* LifxDomainTests */ = {
 			isa = PBXGroup;
 			children = (
-				107C088B1E23989500552E9F /* LifxDomainTests.swift */,
+				107C088B1E23989500552E9F /* DataInputStreamTests.swift */,
 				107C088D1E23989600552E9F /* Info.plist */,
 			);
 			path = LifxDomainTests;
@@ -230,7 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				107C088C1E23989500552E9F /* LifxDomainTests.swift in Sources */,
+				107C088C1E23989500552E9F /* DataInputStreamTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
