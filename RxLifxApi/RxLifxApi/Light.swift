@@ -30,13 +30,27 @@ public protocol LightSource {
 }
 
 public protocol LightsChangeDispatcher {
-    func notifyChange(light: Light, property: String, oldValue: Any?, newValue: Any?)
+    func notifyChange(light: Light, property: LightPropertyName, oldValue: Any?, newValue: Any?)
 
     func lightAdded(light: Light)
 }
 
+public enum LightPropertyName{
+    case color
+    case zones
+    case power
+    case label
+    case hostFirmware
+    case wifiFirmware
+    case version
+    case group
+    case location
+    case infraredBrightness
+    case reachable
+}
+
 public class Light {
-    private let disposeBag: CompositeDisposable = CompositeDisposable()
+    private var disposeBag: CompositeDisposable = CompositeDisposable()
     public let lightSource: LightSource
     public let lightChangeDispatcher: LightsChangeDispatcher
 
@@ -46,27 +60,29 @@ public class Light {
 
     public var sequence: UInt8 = 0
 
-    public lazy var color:LightProperty<HSBK> = { LightProperty<HSBK>(light: self, name: "color￿") }()
+    public static let refreshMutablePropertiesTickModulo = 20
 
-    public lazy var zones:LightProperty<MultiZones> = { LightProperty<MultiZones>(light: self, name: "zones￿") }()
+    public lazy var color:LightProperty<HSBK> = { LightProperty<HSBK>(light: self, name: .color) }()
 
-    public lazy var power: LightProperty<UInt16> = { LightProperty<UInt16>(light: self, name: "power￿") }()
+    public lazy var zones:LightProperty<MultiZones> = { LightProperty<MultiZones>(light: self, name: .zones) }()
 
-    public lazy var label: LightProperty<String> = { LightProperty<String>(light: self, name: "label￿") }()
+    public lazy var power: LightProperty<UInt16> = { LightProperty<UInt16>(light: self, name: .power) }()
 
-    public lazy var hostFirmware: LightProperty<FirmwareVersion> = { LightProperty<FirmwareVersion>(light: self, name: "hostFirmware￿") }()
+    public lazy var label: LightProperty<String> = { LightProperty<String>(light: self, name: .label) }()
 
-    public lazy var wifiFirmware: LightProperty<FirmwareVersion> = { LightProperty<FirmwareVersion>(light: self, name: "wifiFirmware￿") }()
+    public lazy var hostFirmware: LightProperty<FirmwareVersion> = { LightProperty<FirmwareVersion>(light: self, name: .hostFirmware) }()
 
-    public lazy var version: LightProperty<LightVersion> = { LightProperty<LightVersion>(light: self, name: "version￿") }()
+    public lazy var wifiFirmware: LightProperty<FirmwareVersion> = { LightProperty<FirmwareVersion>(light: self, name: .wifiFirmware) }()
 
-    public lazy var group: LightProperty<LightGroup> = { LightProperty<LightGroup>(light: self, name: "group￿") }()
+    public lazy var version: LightProperty<LightVersion> = { LightProperty<LightVersion>(light: self, name: .version) }()
 
-    public lazy var location: LightProperty<LightLocation> = { LightProperty<LightLocation>(light: self, name: "location￿") }()
+    public lazy var group: LightProperty<LightGroup> = { LightProperty<LightGroup>(light: self, name: .group) }()
 
-    public lazy var infraredBrightness: LightProperty<UInt16> = { LightProperty<UInt16>(light: self, name: "infraredBrightness￿") }()
+    public lazy var location: LightProperty<LightLocation> = { LightProperty<LightLocation>(light: self, name: .location) }()
 
-    public lazy var reachable: LightProperty<Bool> = { LightProperty<Bool>(light: self, name: "reachable￿") }()
+    public lazy var infraredBrightness: LightProperty<UInt16> = { LightProperty<UInt16>(light: self, name: .infraredBrightness) }()
+
+    public lazy var reachable: LightProperty<Bool> = { LightProperty<Bool>(light: self, name: .reachable, defaultValue: false) }()
 
     public var lastSeenAt:Date = Date.distantPast
 
@@ -100,6 +116,9 @@ public class Light {
 
     public func attach(observable: GroupedObservable<UInt64, SourcedMessage>) -> Light{
 
+        dispose()
+        disposeBag = CompositeDisposable()
+
         _ = disposeBag.insert(observable.subscribe(onNext: {
             (message: SourcedMessage) in
             self.addr = message.sourceAddress
@@ -114,6 +133,9 @@ public class Light {
             c in
             self.pollState()
             self.updateReachability()
+            if(c % Light.refreshMutablePropertiesTickModulo == 0){
+                self.pollMutableProperties()
+            }
             return
         }))
 
@@ -131,9 +153,13 @@ public class Light {
     private func pollProperties(){
         DeviceGetHostFirmwareCommand.create(light: self).fireAndForget()
         DeviceGetWifiFirmwareCommand.create(light: self).fireAndForget()
+        DeviceGetVersionCommand.create(light: self).fireAndForget()
+        pollMutableProperties()
+    }
+
+    private func pollMutableProperties(){
         DeviceGetGroupCommand.create(light: self).fireAndForget()
         DeviceGetLocationCommand.create(light: self).fireAndForget()
-        DeviceGetVersionCommand.create(light: self).fireAndForget()
     }
 }
 
@@ -147,11 +173,11 @@ public class LightProperty<T:Equatable> {
     }
 
     private let light: Light
-    private let name: String
+    private let name: LightPropertyName
     private var updatedFromClientAt: Date = Date.distantPast
     private let localValueValidityWindow: TimeInterval = -2
 
-    init(light: Light, name: String, defaultValue: T? = nil) {
+    init(light: Light, name: LightPropertyName, defaultValue: T? = nil) {
         self.light = light
         self.name = name
         self._value = defaultValue

@@ -27,7 +27,7 @@ class LightsChangeNotificationDispatcher: LightsChangeDispatcher {
 
     let notificationCenter: NotificationCenter = NotificationCenter.default
 
-    func notifyChange(light: Light, property: String, oldValue: Any?, newValue: Any?) {
+    func notifyChange(light: Light, property: LightPropertyName, oldValue: Any?, newValue: Any?) {
         notificationCenter.post(name: LightsChangeNotificationDispatcher.LightChangedNotification, object: light)
     }
 

@@ -58,11 +58,11 @@ public class LightMessageHandler {
             break
         case MessageType.StateLocation.rawValue:
             let stateLocation = message.payload as! StateLocation
-            light.location.updateFromDevice(value: LightLocation(id: stateLocation.location, label: stateLocation.label, updatedAt: Date(timeIntervalSince1970: Double(stateLocation.updated_at / 1000000000))))
+            light.location.updateFromDevice(value: LightLocation(id: stateLocation.location, label: stateLocation.label, updatedAt: stateLocation.updated_at.dateFromNanoSeconds()))
             break
         case MessageType.StateGroup.rawValue:
             let stateGroup = message.payload as! StateGroup
-            light.group.updateFromDevice(value: LightGroup(id: stateGroup.group, label: stateGroup.label, updatedAt: Date(timeIntervalSince1970: Double(stateGroup.updated_at / 1000000000))))
+            light.group.updateFromDevice(value: LightGroup(id: stateGroup.group, label: stateGroup.label, updatedAt: stateGroup.updated_at.dateFromNanoSeconds()))
             break
         case MessageType.LightState.rawValue:
             let lightState = message.payload as! LightState
@@ -102,5 +102,11 @@ public class LightMessageHandler {
         default:
             break
         }
+    }
+}
+
+extension UInt64{
+    func dateFromNanoSeconds() -> Date{
+        return Date(timeIntervalSince1970: Double(self / 1000000000))
     }
 }

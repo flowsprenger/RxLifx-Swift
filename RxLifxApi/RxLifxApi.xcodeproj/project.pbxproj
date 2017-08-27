@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1010878C1F528D3D0092A05C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9A781E5739E1007D0095 /* RxSwift.framework */; };
+		1010878D1F528DFA0092A05C /* RxLifx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9A751E57381F007D0095 /* RxLifx.framework */; };
+		1010878E1F528E010092A05C /* LifxDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9A741E57381F007D0095 /* LifxDomain.framework */; };
+		101087961F5290130092A05C /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1E1018AD3939F0D54A7BD9 /* RxTest.framework */; };
 		10DE9A601E5736FA007D0095 /* RxLifxApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9A561E5736FA007D0095 /* RxLifxApi.framework */; };
-		10DE9A651E5736FA007D0095 /* RxLifxApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10DE9A641E5736FA007D0095 /* RxLifxApiTests.swift */; };
+		10DE9A651E5736FA007D0095 /* LightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10DE9A641E5736FA007D0095 /* LightTests.swift */; };
 		10DE9A671E5736FA007D0095 /* RxLifxApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 10DE9A591E5736FA007D0095 /* RxLifxApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10DE9A761E57381F007D0095 /* LifxDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9A741E57381F007D0095 /* LifxDomain.framework */; };
 		10DE9A771E57381F007D0095 /* RxLifx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9A751E57381F007D0095 /* RxLifx.framework */; };
@@ -42,7 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		10DE9A611E5736FA007D0095 /* PBXContainerItemProxy */ = {
+		101087931F528F900092A05C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 10DE9A4D1E5736FA007D0095 /* Project object */;
 			proxyType = 1;
@@ -56,11 +60,12 @@
 		10DE9A591E5736FA007D0095 /* RxLifxApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxLifxApi.h; sourceTree = "<group>"; };
 		10DE9A5A1E5736FA007D0095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10DE9A5F1E5736FA007D0095 /* RxLifxApiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxLifxApiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		10DE9A641E5736FA007D0095 /* RxLifxApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxLifxApiTests.swift; sourceTree = "<group>"; };
+		10DE9A641E5736FA007D0095 /* LightTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTests.swift; sourceTree = "<group>"; };
 		10DE9A661E5736FA007D0095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10DE9A741E57381F007D0095 /* LifxDomain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LifxDomain.framework; path = "../../../Library/Developer/Xcode/DerivedData/RxLifx-dhhbjuuutiyklddmrqllkyqirybj/Build/Products/Debug-iphonesimulator/LifxDomain.framework"; sourceTree = "<group>"; };
 		10DE9A751E57381F007D0095 /* RxLifx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxLifx.framework; path = "../../../Library/Developer/Xcode/DerivedData/RxLifx-dhhbjuuutiyklddmrqllkyqirybj/Build/Products/Debug-iphonesimulator/RxLifx.framework"; sourceTree = "<group>"; };
 		10DE9A781E5739E1007D0095 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = ../Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		DD1E1018AD3939F0D54A7BD9 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = "/Users/floriansprenger/RxLifx-Swift/Carthage/Build/iOS/RxTest.framework"; sourceTree = "<absolute>"; };
 		DD1E104A10ED23428C126016 /* LightGetPowerCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightGetPowerCommand.swift; sourceTree = "<group>"; };
 		DD1E1212DB86364000A4AA6C /* LightMessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightMessageHandler.swift; sourceTree = "<group>"; };
 		DD1E12162FEACB496D6BD2B9 /* LightSetInfraredCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightSetInfraredCommand.swift; sourceTree = "<group>"; };
@@ -105,6 +110,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				10DE9A601E5736FA007D0095 /* RxLifxApi.framework in Frameworks */,
+				101087961F5290130092A05C /* RxTest.framework in Frameworks */,
+				1010878E1F528E010092A05C /* LifxDomain.framework in Frameworks */,
+				1010878D1F528DFA0092A05C /* RxLifx.framework in Frameworks */,
+				1010878C1F528D3D0092A05C /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +156,7 @@
 		10DE9A631E5736FA007D0095 /* RxLifxApiTests */ = {
 			isa = PBXGroup;
 			children = (
-				10DE9A641E5736FA007D0095 /* RxLifxApiTests.swift */,
+				10DE9A641E5736FA007D0095 /* LightTests.swift */,
 				10DE9A661E5736FA007D0095 /* Info.plist */,
 			);
 			path = RxLifxApiTests;
@@ -159,6 +168,7 @@
 				10DE9A781E5739E1007D0095 /* RxSwift.framework */,
 				10DE9A741E57381F007D0095 /* LifxDomain.framework */,
 				10DE9A751E57381F007D0095 /* RxLifx.framework */,
+				DD1E1018AD3939F0D54A7BD9 /* RxTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -231,11 +241,12 @@
 				10DE9A5B1E5736FA007D0095 /* Sources */,
 				10DE9A5C1E5736FA007D0095 /* Frameworks */,
 				10DE9A5D1E5736FA007D0095 /* Resources */,
+				101087971F5290710092A05C /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				10DE9A621E5736FA007D0095 /* PBXTargetDependency */,
+				101087941F528F900092A05C /* PBXTargetDependency */,
 			);
 			name = RxLifxApiTests;
 			productName = RxLifxApiTests;
@@ -297,6 +308,24 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		101087971F5290710092A05C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/../Carthage/Build/iOS/RxTest.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/RxSwift.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		10DE9A511E5736FA007D0095 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -335,17 +364,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10DE9A651E5736FA007D0095 /* RxLifxApiTests.swift in Sources */,
+				10DE9A651E5736FA007D0095 /* LightTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		10DE9A621E5736FA007D0095 /* PBXTargetDependency */ = {
+		101087941F528F900092A05C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 10DE9A551E5736FA007D0095 /* RxLifxApi */;
-			targetProxy = 10DE9A611E5736FA007D0095 /* PBXContainerItemProxy */;
+			targetProxy = 101087931F528F900092A05C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -496,6 +525,10 @@
 		10DE9A6E1E5736FA007D0095 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PROJECT_DIR}/../Carthage/Build/iOS\"/**",
+				);
 				INFOPLIST_FILE = RxLifxApiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wo.lf.RxLifxApiTests;
@@ -507,6 +540,10 @@
 		10DE9A6F1E5736FA007D0095 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PROJECT_DIR}/../Carthage/Build/iOS\"/**",
+				);
 				INFOPLIST_FILE = RxLifxApiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wo.lf.RxLifxApiTests;
