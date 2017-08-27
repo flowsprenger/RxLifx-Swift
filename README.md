@@ -1,4 +1,5 @@
 # RxLifx-Swift
+[![Build Status](https://travis-ci.org/flowsprenger/RxLifx-Swift.svg?branch=master)](https://travis-ci.org/flowsprenger/RxLifx-Swift)
 
 A bundle of libraries that can be utilised to communicate with local LIFX lights using reactive programming and Swift 3.
 
