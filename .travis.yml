@@ -1,0 +1,12 @@
+language: objective-c
+
+os:
+    - osx
+language: generic
+dist: trusty
+osx_image: xcode8.3
+
+script:
+    - xcodebuild -version;
+      xcodebuild -showsdks;
+      ./run-tests.sh;
