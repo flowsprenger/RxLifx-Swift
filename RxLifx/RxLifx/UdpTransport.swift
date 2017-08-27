@@ -50,7 +50,7 @@ public class UdpTransport<T:MessageGenerator> {
                             let publisherSubscription = publisher.subscribe{ targetedData in
                                 if let element = targetedData.element{
                                     var target = element.target
-                                    socket.writeMessage(socketDescriptor: descriptor, addr: &target, data: element.data)
+                                    _ = socket.writeMessage(socketDescriptor: descriptor, addr: &target, data: element.data)
                                 }
                             }
                             self.publisher = publisher

@@ -47,7 +47,7 @@ class RxLifxTests: XCTestCase {
         switch(result){
             case .Success(let handle):
                 let transport = UdpTransport(port: "56701", generator: TestMessageGenerator())
-                disposables.insert(transport.messages.subscribe{ event in
+                _ = disposables.insert(transport.messages.subscribe{ event in
                     switch(event){
                         case .next(let data):
                             XCTAssertEqual(data, testData)
@@ -74,7 +74,7 @@ class RxLifxTests: XCTestCase {
         let testData = Data(bytes: [1, 3, 2, 5])
 
         let transport = UdpTransport(port: "56701", generator: TestMessageGenerator())
-        disposables.insert(transport.messages.subscribe{ event in
+        _ = disposables.insert(transport.messages.subscribe{ event in
             switch(event){
             case .next(let data):
                 XCTAssertEqual(data, testData)
