@@ -63,7 +63,7 @@ class LightTests: XCTestCase {
     func testLightUpdatesReachableOnMessage(){
         let label = "abcde"
         let expectation = XCTestExpectation(description: "receives label change notification")
-        changeDispatcher.delegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
+        changeDispatcher.notifyChangeDelegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
             if(property == .reachable){
                 XCTAssertEqual(light.id, self.light.id)
                 XCTAssertEqual(oldValue as? Bool, false)
@@ -80,7 +80,7 @@ class LightTests: XCTestCase {
     func testLightUpdatesLabelAndNotifies(){
         let label = "abcde"
         let expectation = XCTestExpectation(description: "receives label change notification")
-        changeDispatcher.delegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
+        changeDispatcher.notifyChangeDelegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
             if(property == .label){
                 XCTAssertEqual(light.id, self.light.id)
                 XCTAssertEqual(oldValue as? String, nil)
@@ -99,7 +99,7 @@ class LightTests: XCTestCase {
         let id:[UInt8] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
         let updated_at = UInt64(arc4random_uniform(UInt32.max))
         let expectation = XCTestExpectation(description: "receives group change notification")
-        changeDispatcher.delegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
+        changeDispatcher.notifyChangeDelegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
             if(property == .group){
                 XCTAssertEqual(light.id, self.light.id)
                 XCTAssertEqual(oldValue as? LightGroup, nil)
@@ -122,7 +122,7 @@ class LightTests: XCTestCase {
         let id:[UInt8] = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
         let updated_at = UInt64(arc4random_uniform(UInt32.max))
         let expectation = XCTestExpectation(description: "receives group change notification")
-        changeDispatcher.delegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
+        changeDispatcher.notifyChangeDelegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
             if(property == .location){
                 XCTAssertEqual(light.id, self.light.id)
                 XCTAssertEqual(oldValue as? LightLocation, nil)
@@ -174,7 +174,6 @@ class LightTests: XCTestCase {
     }
 
     func testPollPropertiesOnTick(){
-        let observable = GroupedObservable(key: lightId!, source: publisher)
         let expectationGetState = XCTestExpectation(description: "polls light state")
         let expectationGetMultiZoneState = XCTestExpectation(description: "polls light multi zone state")
         let expectationGetInfraredState = XCTestExpectation(description: "polls light infrared state")
@@ -197,7 +196,6 @@ class LightTests: XCTestCase {
     }
 
     func testPollPropertiesAtLeastEveryNthTick(){
-        let observable = GroupedObservable(key: lightId!, source: publisher)
         let expectationGetGroup = XCTestExpectation(description: "polls group")
         let expectationGetLocation = XCTestExpectation(description: "polls location")
 
@@ -247,13 +245,14 @@ class TestLightSource: LightSource{
 }
 
 class TestLightChangeDispatcher: LightsChangeDispatcher{
-    var delegate: ((_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) -> ())?
+    var notifyChangeDelegate: ((_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) -> ())?
+    var lightAddedDelegate: ((_ light: Light) -> ())?
 
     func notifyChange(light: Light, property: LightPropertyName, oldValue: Any?, newValue: Any?){
-        delegate?(light, property, oldValue, newValue)
+        notifyChangeDelegate?(light, property, oldValue, newValue)
     }
 
     func lightAdded(light: Light){
-
+        lightAddedDelegate?(light)
     }
 }
