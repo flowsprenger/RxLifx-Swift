@@ -20,13 +20,23 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 import Foundation
 import RxSwift
 
-public class UdpTransport<T:MessageGenerator> {
+public protocol Transport{
+    associatedtype TMG:MessageGenerator
+
+    var messages: Observable<TMG.TM> {get}
+
+    init(port: String, generator: TMG)
+
+    func sendMessage(target: sockaddr, data: Data) -> Bool
+}
+
+public class UdpTransport<T:MessageGenerator>: Transport {
     public let port: String
     let generator: T
 
     var publisher:PublishSubject<TargetedData>? = nil
 
-    public init(port: String, generator: T) {
+    public required init(port: String, generator: T) {
         self.port = port
         self.generator = generator
     }

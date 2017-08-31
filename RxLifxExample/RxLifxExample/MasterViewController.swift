@@ -20,13 +20,14 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 import UIKit
 import CoreData
 import RxLifxApi
+import RxLifx
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
 
-    let lightService = LightService(lightsChangeDispatcher: LightsChangeNotificationDispatcher())
+    let lightService:LightService = LightService(lightsChangeDispatcher: LightsChangeNotificationDispatcher(), transportGenerator: UdpTransport.self)
     var lights:[Light] = []
 
     override func viewDidLoad() {

@@ -22,11 +22,15 @@ import RxSwift
 import RxLifx
 import LifxDomain
 
-public class LightService: LightSource {
+public struct LightServiceConstants{
+    public static let transportRetryTimeout = RxTimeInterval(5)
+}
+
+public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessageGenerator{
 
     public let source = arc4random()
 
-    public let tick = Observable<Int>.interval(5, scheduler: MainScheduler.instance).publish().refCount()
+    public let tick: Observable<Int>
 
     public let messages: Observable<SourcedMessage>
 
@@ -34,29 +38,37 @@ public class LightService: LightSource {
 
     public let lightsChangeDispatcher: LightsChangeDispatcher
 
-    private let udpTransport = UdpTransport(port: "0", generator: LightMessageGenerator())
+    internal let udpTransport:T
 
-    private let legacyUdpTransport = UdpTransport(port: String(Header.LIFX_DEFAULT_PORT), generator: LightMessageGenerator())
-
-    private let ioScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
+    internal let legacyUdpTransport:T
 
     private var lights:[UInt64:Light] = [:]
 
-    public static let transportRetryTimeout = RxTimeInterval(5)
+    private let mainScheduler: SchedulerType
+    private let ioScheduler:SchedulerType
 
-    public init(lightsChangeDispatcher: LightsChangeDispatcher) {
+    public init(lightsChangeDispatcher: LightsChangeDispatcher, transportGenerator: T.Type, mainScheduler:SchedulerType = MainScheduler.instance, ioScheduler: SchedulerType =  ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.lightsChangeDispatcher = lightsChangeDispatcher
-        let scheduler = ioScheduler
+        self.tick = Observable<Int>.interval(5, scheduler: mainScheduler).publish().refCount()
+        self.mainScheduler = mainScheduler
+        self.ioScheduler = ioScheduler
+
+        udpTransport = transportGenerator.init(port: "0", generator: LightMessageGenerator())
+        legacyUdpTransport = transportGenerator.init(port: String(Header.LIFX_DEFAULT_PORT), generator: LightMessageGenerator())
 
         messages = Observable.of(
-                udpTransport.messages.retryWhen({ (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightService.transportRetryTimeout, scheduler: scheduler)}}),
-                legacyUdpTransport.messages.retryWhen({ (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightService.transportRetryTimeout, scheduler: scheduler)}})
+                udpTransport.messages.retryWhen({ (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightServiceConstants.transportRetryTimeout, scheduler: ioScheduler)}}),
+                legacyUdpTransport.messages.retryWhen({ (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightServiceConstants.transportRetryTimeout, scheduler: ioScheduler)}})
         ).merge()
     }
 
     public func start() {
         let _ = disposeBag.insert(
-                messages.subscribeOn(ioScheduler).observeOn(MainScheduler.instance)
+                messages.subscribeOn(ioScheduler)
+                        .do(onNext: nil, onError: nil, onCompleted: nil, onSubscribe: nil, onSubscribed: {
+                            _ = self.disposeBag.insert(self.broadcastStateServiceDelayed())
+                        }, onDispose: nil)
+                        .observeOn(mainScheduler)
                         .filter({ (message: SourcedMessage) in return message.message.header.target != 0 })
                         .groupBy(keySelector: { (message: SourcedMessage) in return message.message.header.target })
                         .map({ (input: GroupedObservable<UInt64, SourcedMessage>) -> Light in
@@ -74,6 +86,8 @@ public class LightService: LightSource {
             BroadcastGetServiceCommand.create(lightSource: self).fireAndForget()
             return
         }))
+
+        BroadcastGetServiceCommand.create(lightSource: self).fireAndForget()
     }
 
     public func stop() {
@@ -83,5 +97,16 @@ public class LightService: LightSource {
 
     public func sendMessage(light: Light?, data: Data) -> Bool {
         return udpTransport.sendMessage(target: light?.addr ?? sockaddr.broadcastTo(port: Header.LIFX_DEFAULT_PORT), data: data)
+    }
+
+    private func broadcastStateServiceDelayed() -> Disposable {
+        return Observable<Int>.timer(1, period: nil, scheduler: self.ioScheduler).subscribe{ event in
+            switch(event){
+            case .next(_):
+                BroadcastGetServiceCommand.create(lightSource: self).fireAndForget()
+            default: ()
+            }
+
+        }
     }
 }

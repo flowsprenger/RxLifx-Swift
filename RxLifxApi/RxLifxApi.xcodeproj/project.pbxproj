@@ -19,6 +19,7 @@
 		10DE9A791E5739E1007D0095 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9A781E5739E1007D0095 /* RxSwift.framework */; };
 		DD1E1044B11D6B30A7263E44 /* LightGetCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E18DA77F9BEDFDC8E66A0 /* LightGetCommand.swift */; };
 		DD1E108F568A2573CEB93F99 /* LightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1812F2408A8D7698ABDE /* LightService.swift */; };
+		DD1E12011579A8137EC794A0 /* LightServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1F011F3AE47DE56EC904 /* LightServiceTests.swift */; };
 		DD1E1289E5231719D7D1C2CA /* LightSetInfraredCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E12162FEACB496D6BD2B9 /* LightSetInfraredCommand.swift */; };
 		DD1E140A4C39C528446E55C4 /* DeviceGetWifiFirmwareCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1645B638FFA8A03D7018 /* DeviceGetWifiFirmwareCommand.swift */; };
 		DD1E14169D6D613478CF43F0 /* DeviceGetHostInfoCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E12EA4A86FAB592860C59 /* DeviceGetHostInfoCommand.swift */; };
@@ -92,6 +93,7 @@
 		DD1E1CE4D0BAA8E2B9677091 /* DeviceSetGroupCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSetGroupCommand.swift; sourceTree = "<group>"; };
 		DD1E1E8DC6BBCAEC2629F74F /* DeviceGetLabelCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceGetLabelCommand.swift; sourceTree = "<group>"; };
 		DD1E1EF9499D447143BF11E1 /* DeviceGetVersionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceGetVersionCommand.swift; sourceTree = "<group>"; };
+		DD1E1F011F3AE47DE56EC904 /* LightServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			children = (
 				10DE9A641E5736FA007D0095 /* LightTests.swift */,
 				10DE9A661E5736FA007D0095 /* Info.plist */,
+				DD1E1F011F3AE47DE56EC904 /* LightServiceTests.swift */,
 			);
 			path = RxLifxApiTests;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				10DE9A651E5736FA007D0095 /* LightTests.swift in Sources */,
+				DD1E12011579A8137EC794A0 /* LightServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
