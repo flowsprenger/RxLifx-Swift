@@ -223,7 +223,7 @@ class TestLightSource: LightSource{
     let tick: Observable<Int>
     let source: UInt32 = arc4random_uniform(UInt32.max)
     let messages: Observable<SourcedMessage>
-
+    let ioScheduler: SchedulerType
     let tickPublisher = PublishSubject<Int>()
     var sequence = 0
 
@@ -232,6 +232,7 @@ class TestLightSource: LightSource{
     init(messages: Observable<SourcedMessage>, scheduler: SchedulerType){
         self.messages = messages
         self.tick = tickPublisher
+        self.ioScheduler = scheduler
     }
 
     func sendMessage(light: Light?, data: Data) -> Bool{

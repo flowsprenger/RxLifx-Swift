@@ -24,6 +24,7 @@ import RxSwift
 public protocol LightSource {
     var tick: Observable<Int> { get }
     var source: UInt32 { get }
+    var ioScheduler: SchedulerType { get }
 
     var messages: Observable<SourcedMessage> { get }
     func sendMessage(light: Light?, data: Data) -> Bool
@@ -102,6 +103,7 @@ public class Light {
     }
 
     public func dispose() {
+        groupDisposable?.dispose()
         disposeBag.dispose()
     }
 
@@ -114,12 +116,13 @@ public class Light {
         reachable.updateFromClient(value: lastSeenAt.timeIntervalSinceNow > -11 )
     }
 
+    private var groupDisposable: Disposable? = nil
     public func attach(observable: GroupedObservable<UInt64, SourcedMessage>) -> Light{
 
         dispose()
         disposeBag = CompositeDisposable()
 
-        _ = disposeBag.insert(observable.subscribe(onNext: {
+        groupDisposable = observable.subscribe(onNext: {
             (message: SourcedMessage) in
             self.addr = message.sourceAddress
 
@@ -127,7 +130,7 @@ public class Light {
             self.updateReachability()
 
             LightMessageHandler.handleMessage(light: self, message: message.message)
-        }))
+        })
 
         _ = disposeBag.insert(lightSource.tick.subscribe(onNext: {
             c in

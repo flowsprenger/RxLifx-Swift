@@ -40,7 +40,7 @@ public class AsyncLightCommand{
             if lightSource.sendMessage(light: light, data: message.toData()) {
                 sideEffect?()
                 if(needsAcknowledgement || needsResponse){
-                    subscription = lightSource.messages.filter({m in message.header.source == m.message.header.source && message.header.target == m.message.header.target && message.header.sequence == m.message.header.sequence}).timeout(AsyncLightCommand.TIMEOUT, scheduler: ConcurrentDispatchQueueScheduler(qos: .background)).subscribe(onNext: { m in
+                    subscription = lightSource.messages.filter({m in message.header.source == m.message.header.source && message.header.target == m.message.header.target && message.header.sequence == m.message.header.sequence}).timeout(AsyncLightCommand.TIMEOUT, scheduler: lightSource.ioScheduler).subscribe(onNext: { m in
                         if(m.message.header.type == MessageType.Acknowledgement.rawValue) {
                             subscriber.onNext(Result(status: .Acknowledged, result: nil))
                             needsAcknowledgement = false
