@@ -34,7 +34,7 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
 
     public let messages: Observable<SourcedMessage>
 
-    private let disposeBag = CompositeDisposable()
+    private var disposeBag = CompositeDisposable()
 
     public let lightsChangeDispatcher: LightsChangeDispatcher
 
@@ -45,7 +45,7 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
     private var lights:[UInt64:Light] = [:]
 
     private let mainScheduler: SchedulerType
-    private let ioScheduler:SchedulerType
+    public let ioScheduler:SchedulerType
 
     public init(lightsChangeDispatcher: LightsChangeDispatcher, transportGenerator: T.Type, mainScheduler:SchedulerType = MainScheduler.instance, ioScheduler: SchedulerType =  ConcurrentDispatchQueueScheduler(qos: .background)) {
         self.lightsChangeDispatcher = lightsChangeDispatcher
@@ -59,17 +59,18 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
         messages = Observable.of(
                 udpTransport.messages.retryWhen({ (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightServiceConstants.transportRetryTimeout, scheduler: ioScheduler)}}),
                 legacyUdpTransport.messages.retryWhen({ (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightServiceConstants.transportRetryTimeout, scheduler: ioScheduler)}})
-        ).merge()
+        ).merge().publish().refCount()
     }
 
     public func start() {
+        disposeBag.dispose()
+        disposeBag = CompositeDisposable()
         let _ = disposeBag.insert(
                 messages.subscribeOn(ioScheduler)
-                        .do(onNext: nil, onError: nil, onCompleted: nil, onSubscribe: nil, onSubscribed: {
-                            _ = self.disposeBag.insert(self.broadcastStateServiceDelayed())
-                        }, onDispose: nil)
                         .observeOn(mainScheduler)
-                        .filter({ (message: SourcedMessage) in return message.message.header.target != 0 })
+                        .filter({ (message: SourcedMessage) in
+                            return message.message.header.target != 0
+                        })
                         .groupBy(keySelector: { (message: SourcedMessage) in return message.message.header.target })
                         .map({ (input: GroupedObservable<UInt64, SourcedMessage>) -> Light in
                             if let light:Light = self.lights[input.key]{
