@@ -47,6 +47,11 @@ public class DataInputStream {
         return value
     }
 
+    func readSignedShort() throws -> Int16 {
+        let value = try Int16(readByte()) | (Int16(readByte()) << 8)
+        return value
+    }
+
     func readWord() throws -> UInt32 {
         let value = try UInt32(readShort()) | (UInt32(readShort()) << 16)
         return value
@@ -93,7 +98,11 @@ public class DataOutputStream
     }
 
     func writeShort(value:UInt16){
+        writeByte(value: UInt8(truncatingBitPattern: value))
+        writeByte(value: UInt8(truncatingBitPattern: value >> 8))
+    }
 
+    func writeSignedShort(value:Int16){
         writeByte(value: UInt8(truncatingBitPattern: value))
         writeByte(value: UInt8(truncatingBitPattern: value >> 8))
     }

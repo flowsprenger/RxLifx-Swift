@@ -920,6 +920,55 @@ public class LightSetColor : MessagePayload {
     }
 
 }
+public class LightSetWaveform : MessagePayload {
+
+    public static let _size = 21
+    public let _size = 21
+    public let _type:UInt16 = 103
+
+    public var reserved:UInt8
+    public var transient:UInt8
+    public var color:HSBK
+    public var period:UInt32
+    public var cycles:Float32
+    public var skew_ratio:Int16
+    public var waveform:WaveformType?
+
+    public init(reserved:UInt8, transient:UInt8, color:HSBK, period:UInt32, cycles:Float32, skew_ratio:Int16, waveform:WaveformType?){
+        self.reserved = reserved
+        self.transient = transient
+        self.color = color
+        self.period = period
+        self.cycles = cycles
+        self.skew_ratio = skew_ratio
+        self.waveform = waveform
+    }
+
+    public init?(stream:DataInputStream){
+        do{
+            reserved = try stream.readByte()
+            transient = try stream.readByte()
+            color = try throwIfNil(guarded: HSBK(stream: stream))
+            period = try stream.readWord()
+            cycles = try stream.readFloat()
+            skew_ratio = try stream.readSignedShort()
+            waveform = WaveformType(rawValue: try stream.readByte())
+        }catch{
+            return nil
+        }
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeByte(value:reserved)
+        stream.writeByte(value:transient)
+        color.emit(stream: stream)
+        stream.writeWord(value:period)
+        stream.writeFloat(value:cycles)
+        stream.writeSignedShort(value:skew_ratio)
+        stream.writeByte(value:(waveform?.rawValue ?? 0))
+    }
+
+}
 public class LightState : MessagePayload {
 
     public static let _size = 52
@@ -958,6 +1007,71 @@ public class LightState : MessagePayload {
         stream.writeShort(value:power)
         stream.writeString(value: label, size:32)
         stream.writeLong(value:reserved1)
+    }
+
+}
+public class LightSetWaveformOptional : MessagePayload {
+
+    public static let _size = 25
+    public let _size = 25
+    public let _type:UInt16 = 119
+
+    public var reserved:UInt8
+    public var transient:UInt8
+    public var color:HSBK
+    public var period:UInt32
+    public var cycles:Float32
+    public var skew_ratio:Int16
+    public var waveform:WaveformType?
+    public var set_hue:UInt8
+    public var set_saturation:UInt8
+    public var set_brightness:UInt8
+    public var set_kelvin:UInt8
+
+    public init(reserved:UInt8, transient:UInt8, color:HSBK, period:UInt32, cycles:Float32, skew_ratio:Int16, waveform:WaveformType?, set_hue:UInt8, set_saturation:UInt8, set_brightness:UInt8, set_kelvin:UInt8){
+        self.reserved = reserved
+        self.transient = transient
+        self.color = color
+        self.period = period
+        self.cycles = cycles
+        self.skew_ratio = skew_ratio
+        self.waveform = waveform
+        self.set_hue = set_hue
+        self.set_saturation = set_saturation
+        self.set_brightness = set_brightness
+        self.set_kelvin = set_kelvin
+    }
+
+    public init?(stream:DataInputStream){
+        do{
+            reserved = try stream.readByte()
+            transient = try stream.readByte()
+            color = try throwIfNil(guarded: HSBK(stream: stream))
+            period = try stream.readWord()
+            cycles = try stream.readFloat()
+            skew_ratio = try stream.readSignedShort()
+            waveform = WaveformType(rawValue: try stream.readByte())
+            set_hue = try stream.readByte()
+            set_saturation = try stream.readByte()
+            set_brightness = try stream.readByte()
+            set_kelvin = try stream.readByte()
+        }catch{
+            return nil
+        }
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeByte(value:reserved)
+        stream.writeByte(value:transient)
+        color.emit(stream: stream)
+        stream.writeWord(value:period)
+        stream.writeFloat(value:cycles)
+        stream.writeSignedShort(value:skew_ratio)
+        stream.writeByte(value:(waveform?.rawValue ?? 0))
+        stream.writeByte(value:set_hue)
+        stream.writeByte(value:set_saturation)
+        stream.writeByte(value:set_brightness)
+        stream.writeByte(value:set_kelvin)
     }
 
 }
@@ -1250,6 +1364,13 @@ public enum PowerState : UInt16 {
     case OFF = 0
     case ON = 65535
 }
+public enum WaveformType : UInt8 {
+    case SAW = 0
+    case SINE = 1
+    case HALF_SINE = 2
+    case TRIANGLE = 3
+    case PULSE = 4
+}
 public enum ApplicationRequest : UInt8 {
     case NO_APPLY = 0
     case APPLY = 1
@@ -1293,7 +1414,9 @@ public enum MessageType : UInt16 {
     case EchoResponse = 59
     case LightGet = 101
     case LightSetColor = 102
+    case LightSetWaveform = 103
     case LightState = 107
+    case LightSetWaveformOptional = 119
     case LightGetPower = 116
     case LightSetPower = 117
     case LightStatePower = 118
@@ -1338,7 +1461,9 @@ public let MessagePayloadFromType : [UInt16:(DataInputStream) -> MessagePayload?
     59 : { stream in EchoResponse(stream:stream) },
     101 : { stream in LightGet(stream:stream) },
     102 : { stream in LightSetColor(stream:stream) },
+    103 : { stream in LightSetWaveform(stream:stream) },
     107 : { stream in LightState(stream:stream) },
+    119 : { stream in LightSetWaveformOptional(stream:stream) },
     116 : { stream in LightGetPower(stream:stream) },
     117 : { stream in LightSetPower(stream:stream) },
     118 : { stream in LightStatePower(stream:stream) },

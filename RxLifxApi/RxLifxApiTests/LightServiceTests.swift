@@ -97,7 +97,7 @@ class LightServiceTests: XCTestCase {
             return true
         }
 
-        service.sendMessage(light: nil, data: Data())
+        _ = service.sendMessage(light: nil, data: Data())
 
         wait(for: [expectation], timeout: 1)
     }
@@ -112,7 +112,7 @@ class LightServiceTests: XCTestCase {
             light = newLight
         }
 
-        var addr = sockaddr(sa_len: 0, sa_family: UInt8(AF_INET),
+        let addr = sockaddr(sa_len: 0, sa_family: UInt8(AF_INET),
                 sa_data: (0, 0, 3, 0, 0, 5, 0, 0, 6, 0, 0, 0, 0, 0))
 
         service.udpTransport.sendMessageDelegate = createTestLightResponder(service: service, lightId: lightId, addr: addr)
@@ -130,7 +130,7 @@ class LightServiceTests: XCTestCase {
             }
             return true
         }
-        service.sendMessage(light: light, data: Data())
+        _ = service.sendMessage(light: light, data: Data())
 
         wait(for: [expectation], timeout: 1)
     }
