@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class LightSetWaveformCommand {
+public class LightSetWaveformCommand {
     public class func create(light: Light, transient: Bool, color: HSBK, period: UInt32, cycles: Float32, skew_ratio: Int16, waveform: WaveformType, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<LightStatePower>> {
         let message = Message.createMessageWithPayload(LightSetWaveform(reserved: 0, transient: transient ? 1 : 0, color: color, period: period, cycles: cycles, skew_ratio: skew_ratio, waveform: waveform), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired

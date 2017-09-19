@@ -100,5 +100,17 @@ class DetailViewController: UIViewController {
             LightSetPowerCommand.create(light: light, status: powerSwitch.isOn, duration: 0).fireAndForget()
         }
     }
+    
+    @IBAction func blinkRed(_ sender: Any) {
+        if let light = detailItem {
+            LightSetWaveformCommand.create(light: light, transient: true, color: HSBK(hue: UInt16(0 * Float(UInt16.max)), saturation: UInt16(1 * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0), period: 1000, cycles: 1, skew_ratio: Int16(0.5 * Double(Int16.max)), waveform: WaveformType.SINE).fireAndForget()
+        }
+    }
+    @IBAction func blinkBrightness(_ sender: Any) {
+        if let light = detailItem {
+            LightSetWaveformOptionalCommand.create(light: light, transient: true, color: HSBK(hue: UInt16(1 * Float(UInt16.max)), saturation: UInt16(0.23 * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0), period: 1000, cycles: 1, skew_ratio: Int16(0.5 * Double(Int16.max)), waveform: WaveformType.SAW, set_hue: false, set_saturation: false, set_brightness:  true, set_kelvin: false).fireAndForget()
+        }
+    }
+
 }
 
