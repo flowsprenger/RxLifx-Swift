@@ -103,7 +103,6 @@ public class Light {
     }
 
     public func dispose() {
-        groupDisposable?.dispose()
         disposeBag.dispose()
     }
 
@@ -116,13 +115,12 @@ public class Light {
         reachable.updateFromClient(value: lastSeenAt.timeIntervalSinceNow > -11 )
     }
 
-    private var groupDisposable: Disposable? = nil
     public func attach(observable: GroupedObservable<UInt64, SourcedMessage>) -> Light{
 
         dispose()
         disposeBag = CompositeDisposable()
 
-        groupDisposable = observable.subscribe(onNext: {
+        _ = disposeBag.insert(observable.subscribe(onNext: {
             (message: SourcedMessage) in
             self.addr = message.sourceAddress
 
@@ -130,7 +128,7 @@ public class Light {
             self.updateReachability()
 
             LightMessageHandler.handleMessage(light: self, message: message.message)
-        })
+        }))
 
         _ = disposeBag.insert(lightSource.tick.subscribe(onNext: {
             c in
