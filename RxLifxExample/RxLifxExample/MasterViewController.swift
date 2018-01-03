@@ -46,14 +46,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         NotificationCenter.default.addObserver(self, selector: #selector(lightAdded), name: LightsChangeNotificationDispatcher.LightAddedNotification, object: nil)
     }
 
-    func lightAdded(notification: Notification){
+    @objc func lightAdded(notification: Notification){
         if let light = notification.object as? Light {
             lights.append(light)
             tableView.reloadData()
         }
     }
 
-    func lightUpdated() {
+    @objc func lightUpdated() {
         tableView.reloadData()
     }
 
