@@ -98,18 +98,18 @@ public class DataOutputStream
     }
 
     func writeShort(value:UInt16){
-        writeByte(value: UInt8(truncatingBitPattern: value))
-        writeByte(value: UInt8(truncatingBitPattern: value >> 8))
+        writeByte(value: UInt8(truncatingIfNeeded: value))
+        writeByte(value: UInt8(truncatingIfNeeded: value >> 8))
     }
 
     func writeSignedShort(value:Int16){
-        writeByte(value: UInt8(truncatingBitPattern: value))
-        writeByte(value: UInt8(truncatingBitPattern: value >> 8))
+        writeByte(value: UInt8(truncatingIfNeeded: value))
+        writeByte(value: UInt8(truncatingIfNeeded: value >> 8))
     }
 
     func writeWord(value:UInt32){
-        writeShort(value: UInt16(truncatingBitPattern: value))
-        writeShort(value: UInt16(truncatingBitPattern: value >> 16))
+        writeShort(value: UInt16(truncatingIfNeeded: value))
+        writeShort(value: UInt16(truncatingIfNeeded: value >> 16))
     }
 
     func writeFloat(value:Float32){
@@ -117,8 +117,8 @@ public class DataOutputStream
     }
 
     func writeLong(value:UInt64){
-        writeWord(value: UInt32(truncatingBitPattern: value))
-        writeWord(value: UInt32(truncatingBitPattern: value >> 32))
+        writeWord(value: UInt32(truncatingIfNeeded: value))
+        writeWord(value: UInt32(truncatingIfNeeded: value >> 32))
     }
 
     func writeString(value:String, size:Int){

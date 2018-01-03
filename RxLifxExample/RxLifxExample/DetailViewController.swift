@@ -37,7 +37,7 @@ class DetailViewController: UIViewController {
 
     private var viewHasInitialized: Bool = false
 
-    func configureView() {
+    @objc func configureView() {
         if let detail = self.detailItem, viewHasInitialized {
 
             title = detail.label.value ?? detail.id
