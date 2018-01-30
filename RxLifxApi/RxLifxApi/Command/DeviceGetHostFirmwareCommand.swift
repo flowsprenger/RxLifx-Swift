@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceGetHostFirmwareCommand {
+public class DeviceGetHostFirmwareCommand {
     public class func create(light: Light, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateHostFirmware>> {
         let message = Message.createMessageWithPayload(GetHostFirmware(), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired

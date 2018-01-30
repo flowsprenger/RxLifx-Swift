@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class LightSetInfraredCommand {
+public class LightSetInfraredCommand {
 
     public class func create(light: Light, brightness: UInt16, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateInfrared>> {
         let message = Message.createMessageWithPayload(SetInfrared(brightness: brightness), target: light.target, source: light.lightSource.source)

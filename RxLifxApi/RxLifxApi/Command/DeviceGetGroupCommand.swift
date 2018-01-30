@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceGetGroupCommand {
+public class DeviceGetGroupCommand {
     public class func create(light: Light, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateGroup>> {
         let message = Message.createMessageWithPayload(GetGroup(), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired

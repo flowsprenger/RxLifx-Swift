@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceGetLabelCommand {
+public class DeviceGetLabelCommand {
     public class func create(light: Light, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateLabel>> {
         let message = Message.createMessageWithPayload(GetLabel(), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired

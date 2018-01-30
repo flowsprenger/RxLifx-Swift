@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceGetWifiFirmwareCommand {
+public class DeviceGetWifiFirmwareCommand {
     public class func create(light: Light, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateWifiFirmware>> {
         let message = Message.createMessageWithPayload(GetWifiFirmware(), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired

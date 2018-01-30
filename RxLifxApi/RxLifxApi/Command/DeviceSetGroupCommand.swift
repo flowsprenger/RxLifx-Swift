@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceSetGroupCommand {
+public class DeviceSetGroupCommand {
     public class func create(light: Light, group: [UInt8], label: String, updatedAt:Date = Date(), ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateGroup>> {
         let group = LightGroup(id: group.pad(length: 16, e: 48), label: label.padding(toLength: 32, withPad: "", startingAt: 0), updatedAt: updatedAt)
         let message = Message.createMessageWithPayload(SetGroup(group: group.id, label: group.label, updated_at: UInt64(group.updatedAt.timeIntervalSince1970 * 100_000_000)), target: light.target, source: light.lightSource.source)

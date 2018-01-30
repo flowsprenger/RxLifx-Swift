@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceGetVersionCommand {
+public class DeviceGetVersionCommand {
     public class func create(light: Light, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateVersion>> {
         let message = Message.createMessageWithPayload(GetVersion(), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired

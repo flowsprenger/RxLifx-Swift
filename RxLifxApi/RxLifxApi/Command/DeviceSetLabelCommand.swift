@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceSetLabelCommand {
+public class DeviceSetLabelCommand {
     public class func create(light: Light, label: String, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateLabel>> {
         let label = label.padding(toLength: 32, withPad: "", startingAt: 0)
         let message = Message.createMessageWithPayload(SetLabel(label: label), target: light.target, source: light.lightSource.source)

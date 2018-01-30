@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class MultiZoneSetColorZonesCommand {
+public class MultiZoneSetColorZonesCommand {
     public class func create(light: Light, startIndex: UInt8, endIndex: UInt8, color:HSBK, duration: TimeInterval, apply:ApplicationRequest, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<AnyObject>> {
         let message = Message.createMessageWithPayload(SetColorZones(start_index: startIndex, end_index: endIndex, color: color, duration: UInt32(duration * 1000), apply: apply), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired

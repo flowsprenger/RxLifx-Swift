@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class LightGetPowerCommand {
+public class LightGetPowerCommand {
 
     public class func create(light: Light, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<LightStatePower>> {
         let message = Message.createMessageWithPayload(LightGetPower(), target: light.target, source: light.lightSource.source)

@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceEchoRequestCommand {
+public class DeviceEchoRequestCommand {
     public class func create(light: Light, payload: String, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<EchoResponse>> {
         let message = Message.createMessageWithPayload(EchoRequest(payload: [UInt8](payload.padding(toLength: 64, withPad: "", startingAt: 0).utf8)), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired

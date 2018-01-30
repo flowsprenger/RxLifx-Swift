@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceGetLocationCommand {
+public class DeviceGetLocationCommand {
     public class func create(light: Light, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateLocation>> {
         let message = Message.createMessageWithPayload(GetLocation(), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired

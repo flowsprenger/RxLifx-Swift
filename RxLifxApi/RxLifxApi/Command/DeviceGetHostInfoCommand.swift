@@ -22,7 +22,7 @@ import RxLifx
 import LifxDomain
 import RxSwift
 
-class DeviceGetHostInfoCommand {
+public class DeviceGetHostInfoCommand {
     public class func create(light: Light, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateHostInfo>> {
         let message = Message.createMessageWithPayload(GetHostInfo(), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired
