@@ -34,6 +34,9 @@ public class UdpTransport<T:MessageGenerator>: Transport {
     public let port: String
     let generator: T
 
+    class LockObject {}
+    
+    private let publisherLock = LockObject()
     var publisher:PublishSubject<TargetedData>? = nil
 
     public required init(port: String, generator: T) {
@@ -63,7 +66,9 @@ public class UdpTransport<T:MessageGenerator>: Transport {
                                     _ = socket.writeMessage(socketDescriptor: descriptor, addr: &target, data: element.data)
                                 }
                             }
+                            objc_sync_enter(self.publisherLock)
                             self.publisher = publisher
+                            objc_sync_exit(self.publisherLock)
 
                             var result = socket.receive(requestBuffer: &requestBuffer, requestLength: bufferPosition, bufferSize: bufferSize)
                             while case let .Success(receiveResult) = result {
@@ -73,10 +78,12 @@ public class UdpTransport<T:MessageGenerator>: Transport {
 
                                 result = socket.receive(requestBuffer: &requestBuffer, requestLength: bufferPosition, bufferSize: bufferSize)
                             }
-
+                            
+                            objc_sync_enter(self.publisherLock)
                             publisherSubscription.dispose()
                             publisher.dispose()
                             self.publisher = nil
+                            objc_sync_exit(self.publisherLock)
 
                             if(!disposable.isDisposed){
                                 switch(result){
@@ -97,6 +104,8 @@ public class UdpTransport<T:MessageGenerator>: Transport {
     }()
 
     public func sendMessage(target: sockaddr, data: Data) -> Bool {
+        objc_sync_enter(publisherLock)
+        defer { objc_sync_exit(publisherLock) }
         if let publisher = publisher {
             publisher.onNext(TargetedData(target: target, data: data))
             return true
