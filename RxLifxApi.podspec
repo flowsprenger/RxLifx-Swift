@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/lightbow/RxLifx-Swift.git" }
 
-  s.dependency 'RxSwift', '4.1.0'
+  s.dependency 'RxSwift', '4.1.2'
   s.dependency 'RxLifx'
   s.dependency 'LifxDomain'
 
