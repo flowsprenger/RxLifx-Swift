@@ -24,7 +24,7 @@ import RxSwift
 
 public class DeviceSetLocationCommand {
     public class func create(light: Light, location: [UInt8], label: String, updatedAt:Date = Date(), ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateLocation>> {
-        let location = LightLocation(id: location.pad(length: 16, e: 48), label: label.padding(toLength: 32, withPad: "", startingAt: 0), updatedAt: updatedAt)
+        let location = LightLocation(id: location.pad(length: 16, e: 48), label: label, updatedAt: updatedAt)
         let message = Message.createMessageWithPayload(SetLocation(location: location.id, label: location.label, updated_at: UInt64(location.updatedAt.timeIntervalSince1970 * 100_000_000)), target: light.target, source: light.lightSource.source)
         message.header.ackRequired = ackRequired
         message.header.responseRequired = responseRequired
