@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
   s.watchos.deployment_target = '3.2'
 
-  s.source       = { :git => "https://github.com/lightbow/RxLifx-Swift.git" }
+  s.source       = { :git => "https://github.com/flowsprenger/RxLifx-Swift.git" }
 
   s.dependency 'RxSwift', '4.1.2'
   s.dependency 'RxLifx'
