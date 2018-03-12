@@ -67,11 +67,18 @@ public class DataInputStream {
     }
 
     func readString(size:Int) throws -> String {
-        var s = String()
+        var bytes = [UInt8]()
         for _ in 0..<size{
-            try s.append(Character(UnicodeScalar(readByte())))
+            let byte = try readByte()
+            bytes.append(byte)
         }
-        return s
+        
+        // Guarantee a null-terminated cString, in the event of max-length input or some corruption
+        bytes.append(0)
+        
+        let string = String(cString:bytes)
+
+        return string
     }
 
     func readArray<T>(size: Int, generator: @escaping (DataInputStream) throws -> (T)) throws -> [T] {
@@ -122,11 +129,13 @@ public class DataOutputStream
     }
 
     func writeString(value:String, size:Int){
-        let padding = size - value.utf8.count
+        let utf8 = value.utf8.prefix(size)
+        utf8.forEach { writeByte(value: $0) }
+
+        let padding = size - utf8.count
         for _ in 0..<padding{
-            writeByte(value: 20)
+            writeByte(value: 0)
         }
-        value.utf8.forEach{ writeByte(value: UInt8($0)) }
     }
 
     func writeArray<T>(value:[T], writer: (T, DataOutputStream) -> () ){
