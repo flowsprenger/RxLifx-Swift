@@ -71,10 +71,7 @@ public class GetService : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -121,10 +118,7 @@ public class GetHostInfo : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -179,10 +173,7 @@ public class GetHostFirmware : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -233,10 +224,7 @@ public class GetWifiInfo : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -291,10 +279,7 @@ public class GetWifiFirmware : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -345,10 +330,7 @@ public class GetPower : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -416,10 +398,7 @@ public class GetLabel : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -487,10 +466,7 @@ public class GetVersion : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -541,10 +517,7 @@ public class GetInfo : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -595,10 +568,7 @@ public class Acknowledgement : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -616,10 +586,7 @@ public class GetLocation : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -703,10 +670,7 @@ public class GetGroup : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -877,10 +841,7 @@ public class LightGet : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1086,10 +1047,7 @@ public class LightGetPower : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1161,10 +1119,7 @@ public class GetInfrared : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
-        do{
-        }catch{
-            return nil
-        }
+
     }
 
     public func emit(stream:DataOutputStream){
