@@ -36,3 +36,30 @@ class LightsChangeNotificationDispatcher: LightsChangeDispatcher {
     }
 
 }
+
+class LightsGroupLocationChangeNotificationDispatcher: GroupLocationChangeDispatcher {
+    func groupAdded(group: LightsGroup) {
+        print("group added \(group.label)")
+    }
+
+    func groupRemoved(group: LightsGroup) {
+        print("group removed \(group.label)")
+    }
+
+    func groupChanged(group: LightsGroup) {
+        print("group changed \(group.label)")
+    }
+
+    func locationAdded(location: LightsLocation) {
+        print("location added \(location.label)")
+    }
+
+    func locationRemoved(location: LightsLocation) {
+        print("location removed \(location.label)")
+    }
+
+    func locationChanged(location: LightsLocation) {
+        print("location changed \(location.label)")
+    }
+}
+

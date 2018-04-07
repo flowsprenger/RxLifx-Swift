@@ -50,7 +50,7 @@ public enum LightPropertyName{
     case reachable
 }
 
-public class Light {
+public class Light: Equatable {
     private var disposeBag: CompositeDisposable = CompositeDisposable()
     public let lightSource: LightSource
     public let lightChangeDispatcher: LightsChangeDispatcher
@@ -81,7 +81,7 @@ public class Light {
 
     public lazy var version: LightProperty<LightVersion> = { LightProperty<LightVersion>(light: self, name: .version) }()
 
-    public lazy var group: LightProperty<LightGroup> = { LightProperty<LightGroup>(light: self, name: .group) }()
+    public lazy var group: LightProperty<LightGroup> = { LightProperty<LightGroup>(light: self, name: .group, defaultValue: LightGroup.defaultGroup) }()
 
     public lazy var location: LightProperty<LightLocation> = { LightProperty<LightLocation>(light: self, name: .location) }()
 
@@ -182,6 +182,10 @@ public class Light {
         DeviceGetGroupCommand.create(light: self).fireAndForget()
         DeviceGetLocationCommand.create(light: self).fireAndForget()
     }
+
+    public static func == (lhs: Light, rhs: Light) -> Bool {
+        return lhs.target == rhs.target
+    }
 }
 
 public class LightProperty<T:Equatable> {
@@ -257,9 +261,12 @@ public class LightVersion: Equatable{
 }
 
 public class LightLocation: Equatable{
+    static let defaultLocation = LightLocation(id: Array(repeating: 48, count: 8), label: "", updatedAt: Date(timeIntervalSince1970: 0))
+
     public let id: [UInt8]
     public let label: String
     public let updatedAt: Date
+    public lazy var identifier: String = String(describing: id.map({ UnicodeScalar($0) }))
 
     init(id: [UInt8], label:String, updatedAt: Date){
         self.id = id
@@ -273,9 +280,12 @@ public class LightLocation: Equatable{
 }
 
 public class LightGroup: Equatable{
+    static let defaultGroup = LightGroup(id: Array(repeating: 48, count: 8), label: "", updatedAt: Date(timeIntervalSince1970: 0))
+
     public let id: [UInt8]
     public let label: String
     public let updatedAt: Date
+    public lazy var identifier: String = String(describing: id.map({ UnicodeScalar($0) }))
 
     init(id: [UInt8], label:String, updatedAt: Date){
         self.id = id
@@ -302,6 +312,5 @@ public class MultiZones: Equatable{
         while(colors.count > count){
             colors.removeLast()
         }
-
     }
 }
