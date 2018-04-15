@@ -103,7 +103,7 @@ class LightTests: XCTestCase {
         changeDispatcher.notifyChangeDelegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
             if(property == .group){
                 XCTAssertEqual(light.id, self.light.id)
-                XCTAssertEqual(oldValue as? LightGroup, nil)
+                XCTAssertEqual(oldValue as? LightGroup, LightGroup.defaultGroup)
                 XCTAssertEqual((newValue as! LightGroup).label, label)
                 XCTAssertEqual((newValue as! LightGroup).id, id)
                 XCTAssertEqual((newValue as! LightGroup).updatedAt, updated_at.dateFromNanoSeconds())
@@ -126,7 +126,7 @@ class LightTests: XCTestCase {
         changeDispatcher.notifyChangeDelegate = { (_ light: Light, _ property: LightPropertyName, _ oldValue: Any?, _ newValue: Any?) in
             if(property == .location){
                 XCTAssertEqual(light.id, self.light.id)
-                XCTAssertEqual(oldValue as? LightLocation, nil)
+                XCTAssertEqual(oldValue as? LightLocation, LightLocation.defaultLocation)
                 XCTAssertEqual((newValue as! LightLocation).label, label)
                 XCTAssertEqual((newValue as! LightLocation).id, id)
                 XCTAssertEqual((newValue as! LightLocation).updatedAt, updated_at.dateFromNanoSeconds())
