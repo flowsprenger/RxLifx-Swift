@@ -83,7 +83,7 @@ public class Light: Equatable {
 
     public lazy var group: LightProperty<LightGroup> = { LightProperty<LightGroup>(light: self, name: .group, defaultValue: LightGroup.defaultGroup) }()
 
-    public lazy var location: LightProperty<LightLocation> = { LightProperty<LightLocation>(light: self, name: .location) }()
+    public lazy var location: LightProperty<LightLocation> = { LightProperty<LightLocation>(light: self, name: .location, defaultValue: LightLocation.defaultLocation) }()
 
     public lazy var infraredBrightness: LightProperty<UInt16> = { LightProperty<UInt16>(light: self, name: .infraredBrightness) }()
 
