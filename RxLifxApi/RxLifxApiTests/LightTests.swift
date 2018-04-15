@@ -47,7 +47,8 @@ class LightTests: XCTestCase {
         let observable = GroupedObservable(key: id, source: publisher)
         lightSource = TestLightSource(messages: publisher, scheduler: scheduler)
 
-        light = Light(observable: observable, lightSource: lightSource, lightChangeDispatcher: changeDispatcher)
+        light = Light(id: id, lightSource: lightSource, lightChangeDispatcher: changeDispatcher)
+        _ = light.attach(observable: observable)
     }
     
     override func tearDown() {
