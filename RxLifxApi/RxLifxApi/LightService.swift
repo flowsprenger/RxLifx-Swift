@@ -76,7 +76,9 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
                             if let light:Light = self.lights[input.key]{
                                 return light.attach(observable: input)
                             }else {
-                                return Light(observable: input, lightSource: self, lightChangeDispatcher: self.lightsChangeDispatcher)
+                                let light = Light(id: input.key, lightSource: self, lightChangeDispatcher: self.lightsChangeDispatcher)
+                                _ = light.attach(observable: input)
+                                return light
                             }
                         }).subscribe(onNext: { light in
                             self.lights[light.target] = light

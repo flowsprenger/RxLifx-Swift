@@ -109,13 +109,11 @@ public class Light: Equatable {
         }
     }
 
-    public init(observable: GroupedObservable<UInt64, SourcedMessage>, lightSource: LightSource, lightChangeDispatcher: LightsChangeDispatcher) {
+    public init(id: UInt64, lightSource: LightSource, lightChangeDispatcher: LightsChangeDispatcher) {
         self.lightSource = lightSource
         self.lightChangeDispatcher = lightChangeDispatcher
-        self.target = observable.key
-        self.id = observable.key.toLightId()
-
-        _ = attach(observable: observable)
+        self.target = id
+        self.id = id.toLightId()
     }
 
     public func dispose() {
