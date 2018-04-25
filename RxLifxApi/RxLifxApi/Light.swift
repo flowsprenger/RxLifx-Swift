@@ -63,6 +63,10 @@ public class Light {
 
     public static let refreshMutablePropertiesTickModulo = 20
 
+    public static let productsSupportingMultiZone = [0, 31, 32, 38]
+
+    public static let productsSupportingInfrared = [0, 29, 30, 45, 46]
+
     public lazy var color:LightProperty<HSBK> = { LightProperty<HSBK>(light: self, name: .color) }()
 
     public lazy var zones:LightProperty<MultiZones> = { LightProperty<MultiZones>(light: self, name: .zones) }()
@@ -90,6 +94,18 @@ public class Light {
     public var powerState: Bool {
         get {
             return power.value ?? 0 == 0 ? false : true
+        }
+    }
+
+    public var supportsMultiZone: Bool {
+        get {
+            return Light.productsSupportingMultiZone.contains(Int(version.value?.product ?? 0))
+        }
+    }
+
+    public var supportsInfrared: Bool {
+        get {
+            return Light.productsSupportingInfrared.contains(Int(version.value?.product ?? 0))
         }
     }
 
@@ -147,8 +163,12 @@ public class Light {
 
     private func pollState(){
         LightGetCommand.create(light: self).fireAndForget()
-        MultiZoneGetColorZonesCommand.create(light: self, startIndex: UInt8.min, endIndex: UInt8.max).fireAndForget()
-        LightGetInfraredCommand.create(light: self).fireAndForget()
+        if(supportsMultiZone) {
+            MultiZoneGetColorZonesCommand.create(light: self, startIndex: UInt8.min, endIndex: UInt8.max).fireAndForget()
+        }
+        if(supportsInfrared) {
+            LightGetInfraredCommand.create(light: self).fireAndForget()
+        }
     }
 
     private func pollProperties(){
