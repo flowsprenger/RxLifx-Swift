@@ -132,6 +132,81 @@ class LightsGroupLocationServiceTests: XCTestCase {
 
         wait(for: [expectationNewLocationAdded, expectationDefaultLocationRemoved], timeout: 1)
     }
+
+    func testLocationGroupContainsLights() {
+
+        let locationId: [UInt8] = [2, 3, 4, 5, 6, 7, 8, 9]
+        let groupId: [UInt8] = [1, 2, 3, 4, 5, 6, 7, 8]
+
+        lightGroupLocationService.lightAdded(light: lightOne)
+
+        lightOne.group.updateFromClient(value: LightGroup(id:groupId, label: "group", updatedAt: Date()))
+        lightOne.location.updateFromClient(value: LightLocation(id:locationId, label: "location", updatedAt: Date()))
+
+        lightGroupLocationService.lightAdded(light: lightTwo)
+
+        lightTwo.group.updateFromClient(value: LightGroup(id:groupId, label: "group", updatedAt: Date()))
+        lightTwo.location.updateFromClient(value: LightLocation(id:locationId, label: "location", updatedAt: Date()))
+
+        var includesLocation = false
+        var includesGroup = false
+        var includesCorrectLights = false
+
+        lightGroupLocationService.locations.forEach { location in
+            if(location.identifier == locationId.identifier()){
+                includesLocation = true
+                location.groups.forEach { group in
+                    if(group.identifier == groupId.identifier()){
+                        includesGroup = true
+
+                        if(group.lights.contains(lightOne) && group.lights.contains(lightTwo)) {
+                            includesCorrectLights = true
+                        }
+                    }
+                }
+            }
+        }
+        assert(includesLocation == true)
+        assert(includesGroup == true)
+        assert(includesCorrectLights == true)
+    }
+
+    func testLocationOfReturnsCorrectLocation(){
+        let locationId: [UInt8] = [2, 3, 4, 5, 6, 7, 8, 9]
+        let groupId: [UInt8] = [1, 2, 3, 4, 5, 6, 7, 8]
+
+        lightGroupLocationService.lightAdded(light: lightOne)
+
+        lightOne.group.updateFromClient(value: LightGroup(id:groupId, label: "group new", updatedAt: Date(timeIntervalSince1970: TimeInterval(2))))
+        lightOne.location.updateFromClient(value: LightLocation(id:locationId, label: "location old", updatedAt: Date(timeIntervalSince1970: TimeInterval(1))))
+
+        assert(lightGroupLocationService.locationOf(light: lightOne)?.identifier == locationId.identifier())
+        assert(lightGroupLocationService.groupOf(light: lightOne)?.identifier == groupId.identifier())
+    }
+
+    func testLocationAndGroupReturnsNameOfLatestUpdated(){
+        let locationId: [UInt8] = [2, 3, 4, 5, 6, 7, 8, 9]
+        let groupId: [UInt8] = [1, 2, 3, 4, 5, 6, 7, 8]
+
+        lightGroupLocationService.lightAdded(light: lightOne)
+
+        lightOne.group.updateFromClient(value: LightGroup(id:groupId, label: "group new", updatedAt: Date(timeIntervalSince1970: TimeInterval(2))))
+        lightOne.location.updateFromClient(value: LightLocation(id:locationId, label: "location old", updatedAt: Date(timeIntervalSince1970: TimeInterval(1))))
+
+        assert(lightGroupLocationService.locationOf(light: lightOne)?.label == "location old")
+        assert(lightGroupLocationService.groupOf(light: lightOne)?.label == "group new")
+
+        lightGroupLocationService.lightAdded(light: lightTwo)
+
+        lightTwo.group.updateFromClient(value: LightGroup(id:groupId, label: "group old", updatedAt: Date(timeIntervalSince1970: TimeInterval(1))))
+        lightTwo.location.updateFromClient(value: LightLocation(id:locationId, label: "location new", updatedAt: Date(timeIntervalSince1970: TimeInterval(2))))
+
+        assert(lightGroupLocationService.locationOf(light: lightOne)?.label == "location new")
+        assert(lightGroupLocationService.locationOf(light: lightTwo)?.label == "location new")
+        assert(lightGroupLocationService.groupOf(light: lightOne)?.label == "group new")
+        assert(lightGroupLocationService.groupOf(light: lightTwo)?.label == "group new")
+    }
+
 }
 
 class SimpleTestLightSource: LightSource {
@@ -176,5 +251,11 @@ class TestGroupLocationChangeDispatcher: GroupLocationChangeDispatcher{
 
     func locationChanged(location: LightsLocation) {
         locationChangedDelegate?(location)
+    }
+}
+
+extension Array where Element: FixedWidthInteger {
+    func identifier() -> String {
+        return String(describing: self.map({ UnicodeScalar(UInt8($0)) }))
     }
 }

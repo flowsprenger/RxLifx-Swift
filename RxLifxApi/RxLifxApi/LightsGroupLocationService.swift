@@ -21,7 +21,7 @@ import Foundation
 import LifxDomain
 
 public class LightsGroup {
-    fileprivate let identifier: String
+    public let identifier: String
 
     public let location: LightsLocation
 
@@ -59,13 +59,16 @@ public class LightsGroup {
 
 public class LightsLocation {
     fileprivate var groupsById: [String: LightsGroup] = [:]
-    fileprivate let identifier: String
+    public let identifier: String
 
-    public private(set) var groups: Dictionary<String, LightsGroup>.Values
+    public var groups: Dictionary<String, LightsGroup>.Values {
+        get {
+            return groupsById.values
+        }
+    }
 
     init(identifier: String) {
         self.identifier = identifier
-        self.groups = groupsById.values
     }
 
     public var label: String {
@@ -111,12 +114,15 @@ public class LightsGroupLocationService: LightsChangeDispatcher {
 
     private var groupLocationChangeDispatcher: GroupLocationChangeDispatcher
 
-    public private(set) var locations: Dictionary<String, LightsLocation>.Values
+    public var locations: Dictionary<String, LightsLocation>.Values {
+        get{
+            return locationsById.values
+        }
+    }
 
     public init(lightsChangeDispatcher: LightsChangeDispatcher, groupLocationChangeDispatcher: GroupLocationChangeDispatcher) {
         self.lightsChangeDispatcher = lightsChangeDispatcher
         self.groupLocationChangeDispatcher = groupLocationChangeDispatcher
-        self.locations = locationsById.values
     }
 
     public func groupOf(light: Light) -> LightsGroup? {
