@@ -67,7 +67,7 @@ public protocol LightsChangeDispatcher {
 }
 ```
 
-Sending out messages￿:
+Sending out messages:
 ```
 lightService.sendMessage(light: light, data: serializedMessage)
 ```
@@ -90,6 +90,27 @@ setColorCommand..subscribe(onNext: { (Result<LightState>) in print("result recei
 //                                  c) ackRequired is set and matching acknowledge message has been received
 ```
 
+Tracking group and location:
+```
+// instead of passing the lights change dispatcher directly into LightsService decorate it using LightsGroupLocationService
+let groupsLocationService = LightsGroupLocationService(lightsChangeDispatcher: LightsChangeNotificationDispatcher(), groupLocationChangeDispatcher: LightsGroupLocationChangeNotificationDispatcher())
+LightService(lightsChangeDispatcher: groupsLocationService, transportGenerator: UdpTransport.self)
+
+// you can either track all group and location updates through groupLocationChangeDispatcher or query the current state from your LightsGroupLocationService instance
+
+// get the location or group name for a light from LightsGroupLocationService instead of getting the raw value from a light
+lightGroupLocationService.locationOf(light: light).label
+lightGroupLocationService.groupOf(light: light).label
+
+// get all locations, groups, and lights through iteration
+lightGroupLocationService.locations.forEach{ value in
+            value.groups.forEach { group in
+                group.lights.forEach { light in
+                    print(light)
+                }
+            }
+        }
+```
 
 ## RxLifxExample
 
@@ -119,7 +140,7 @@ Mix and match your frameworks using `Linked frameworks and Libraries`
 
 ## External Dependencies
 
-RxSwift, Swift 3
+RxSwift, Swift 4
 
 ## Known issues/limitations
 
@@ -128,8 +149,6 @@ LifxDomain does not validate sizes of array/string fields
 Only iOS frameworks are build at the moment
 
 Protocol data structures containing reserved fields, should have default values
-
-Not much of test coverage
 
 ## Further read
 
