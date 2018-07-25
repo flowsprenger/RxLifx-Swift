@@ -71,13 +71,21 @@ class UdpSocket {
             return .Failure(.SocketCreationError(message))
         }
 
-        var optval: Int = 1;
+        var reuseAddressOption: Int = 1;
 
         let statusSetSockOpt = setsockopt(
                 socketDescriptor,
                 SOL_SOCKET,
                 SO_REUSEADDR,
-                &optval,
+                &reuseAddressOption,
+                socklen_t(MemoryLayout<Int>.size))
+
+        var noSigPipeOption: Int = 1;
+        setsockopt(
+                socketDescriptor,
+                SOL_SOCKET,
+                SO_NOSIGPIPE,
+                &noSigPipeOption,
                 socklen_t(MemoryLayout<Int>.size))
 
         if statusSetSockOpt == -1 {
@@ -88,12 +96,12 @@ class UdpSocket {
             return .Failure(.SetSockOptError(message))
         }
 
-
+        var broadcastOption: Int = 1;
         let statusSetSockOptBroadcast = setsockopt(
                 socketDescriptor,
                 SOL_SOCKET,
                 SO_BROADCAST,
-                &optval,
+                &broadcastOption,
                 socklen_t(MemoryLayout<Int>.size))
 
         if statusSetSockOptBroadcast == -1 {

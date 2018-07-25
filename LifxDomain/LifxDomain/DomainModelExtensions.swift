@@ -71,7 +71,7 @@ public extension Header {
 extension UInt64 {
     public func toLightId() -> String {
         let id = String(self.byteSwapped, radix: 16, uppercase: false)
-        return id.substring(to: id.index(id.startIndex, offsetBy: Swift.min(12, id.distance(from: id.startIndex, to: id.endIndex))))
+        return String(id.prefix(12))
     }
 }
 
