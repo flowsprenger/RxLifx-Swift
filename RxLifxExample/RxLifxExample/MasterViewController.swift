@@ -103,7 +103,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     func configureCell(_ cell: UITableViewCell, withLight light: Light) {
         cell.textLabel!.text = light.label.value ?? light.id
-        cell.backgroundColor = light.color.value?.toUIColor()
+        
+        if let cgColor = light.color.value?.toCGColor() {
+            cell.backgroundColor = UIColor(cgColor:cgColor)
+        }
     }
 
 }
