@@ -6,7 +6,7 @@
 //  Copyright © 2017 Florian Sprenger. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for RxLifx.
 FOUNDATION_EXPORT double RxLifxVersionNumber;

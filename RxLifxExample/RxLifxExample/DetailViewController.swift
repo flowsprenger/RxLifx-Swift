@@ -52,7 +52,7 @@ class DetailViewController: UIViewController {
 
                 brightnessSlider.value = Float(color.brightness) / Float(UInt16.max)
 
-                background.backgroundColor = color.toUIColor()
+                background.backgroundColor = UIColor(cgColor: color.toCGColor())
             }
         }
     }

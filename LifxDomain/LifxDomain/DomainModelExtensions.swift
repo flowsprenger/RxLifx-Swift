@@ -18,6 +18,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 */
 
 import Foundation
+import CoreGraphics
 
 public extension Header {
     public static let LIFX_DEFAULT_PORT: UInt16 = 56700
@@ -76,8 +77,9 @@ extension UInt64 {
 }
 
 extension HSBK {
-    public func toUIColor() -> UIColor {
-        return UIColor(hue: CGFloat(self.hue) / CGFloat(UINT16_MAX), saturation: CGFloat(self.saturation) / CGFloat(UINT16_MAX), brightness: 1, alpha: CGFloat(self.brightness) / CGFloat(UINT16_MAX))
+    public func toCGColor() -> CGColor {
+        let components = [CGFloat(hue)/CGFloat(UInt16.max), CGFloat(saturation)/CGFloat(UInt16.max), 1.0, CGFloat(brightness)/CGFloat(UInt16.max)]
+        return CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: components)!
     }
 }
 
