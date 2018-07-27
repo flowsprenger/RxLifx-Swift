@@ -23,81 +23,93 @@ import LifxDomain
 
 public class LightMessageHandler {
 
-    public class func handleMessage(light:Light, message:Message){
+    public class func handleMessage(light: Light, message: Message) {
 
-        switch(message.header.type){
+        switch (message.header.type) {
         case MessageType.StateService.rawValue:
             break
         case MessageType.StateHostInfo.rawValue:
             break
         case MessageType.StateHostFirmware.rawValue:
-            let stateHostFirmware = message.payload as! StateHostFirmware
-            light.hostFirmware.updateFromDevice(value: FirmwareVersion(build: stateHostFirmware.build, version: stateHostFirmware.version))
+            if let stateHostFirmware = message.payload as? StateHostFirmware {
+                light.hostFirmware.updateFromDevice(value: FirmwareVersion(build: stateHostFirmware.build, version: stateHostFirmware.version))
+            }
             break
         case MessageType.StateWifiInfo.rawValue:
             break
         case MessageType.StateWifiFirmware.rawValue:
-            let stateWifiFirmware = message.payload as! StateWifiFirmware
-            light.wifiFirmware.updateFromDevice(value: FirmwareVersion(build: stateWifiFirmware.build, version: stateWifiFirmware.version))
+            if let stateWifiFirmware = message.payload as? StateWifiFirmware {
+                light.wifiFirmware.updateFromDevice(value: FirmwareVersion(build: stateWifiFirmware.build, version: stateWifiFirmware.version))
+            }
             break
         case MessageType.StatePower.rawValue:
-            let statePower = message.payload as! StatePower
-            light.power.updateFromDevice(value: statePower.level)
+            if let statePower = message.payload as? StatePower {
+                light.power.updateFromDevice(value: statePower.level)
+            }
             break
         case MessageType.StateLabel.rawValue:
-            let stateLabel = message.payload as! StateLabel
-            light.label.updateFromDevice(value: stateLabel.label)
+            if let stateLabel = message.payload as? StateLabel {
+                light.label.updateFromDevice(value: stateLabel.label)
+            }
             break
         case MessageType.StateVersion.rawValue:
-            let stateVersion = message.payload as! StateVersion
-            light.version.updateFromDevice(value: LightVersion(vendor: stateVersion.vendor, product: stateVersion.product, version: stateVersion.version))
+            if let stateVersion = message.payload as? StateVersion {
+                light.version.updateFromDevice(value: LightVersion(vendor: stateVersion.vendor, product: stateVersion.product, version: stateVersion.version))
+            }
             break
         case MessageType.StateInfo.rawValue:
             break
         case MessageType.Acknowledgement.rawValue:
             break
         case MessageType.StateLocation.rawValue:
-            let stateLocation = message.payload as! StateLocation
-            light.location.updateFromDevice(value: LightLocation(id: stateLocation.location, label: stateLocation.label, updatedAt: stateLocation.updated_at.dateFromNanoSeconds()))
+            if let stateLocation = message.payload as? StateLocation {
+                light.location.updateFromDevice(value: LightLocation(id: stateLocation.location, label: stateLocation.label, updatedAt: stateLocation.updated_at.dateFromNanoSeconds()))
+            }
             break
         case MessageType.StateGroup.rawValue:
-            let stateGroup = message.payload as! StateGroup
-            light.group.updateFromDevice(value: LightGroup(id: stateGroup.group, label: stateGroup.label, updatedAt: stateGroup.updated_at.dateFromNanoSeconds()))
+            if let stateGroup = message.payload as? StateGroup {
+                light.group.updateFromDevice(value: LightGroup(id: stateGroup.group, label: stateGroup.label, updatedAt: stateGroup.updated_at.dateFromNanoSeconds()))
+            }
             break
         case MessageType.LightState.rawValue:
-            let lightState = message.payload as! LightState
-            light.color.updateFromDevice(value: lightState.color)
-            light.power.updateFromDevice(value: lightState.power)
-            light.label.updateFromDevice(value: lightState.label)
+            if let lightState = message.payload as? LightState {
+                light.color.updateFromDevice(value: lightState.color)
+                light.power.updateFromDevice(value: lightState.power)
+                light.label.updateFromDevice(value: lightState.label)
+            }
             break
         case MessageType.LightStatePower.rawValue:
-            let statePower = message.payload as! LightStatePower
-            light.power.updateFromDevice(value: statePower.level)
+            if let statePower = message.payload as? LightStatePower {
+                light.power.updateFromDevice(value: statePower.level)
+            }
             break
         case MessageType.StateInfrared.rawValue:
-            let stateInfrared = message.payload as! StateInfrared
-            light.infraredBrightness.updateFromDevice(value: stateInfrared.brightness)
+            if let stateInfrared = message.payload as? StateInfrared {
+                light.infraredBrightness.updateFromDevice(value: stateInfrared.brightness)
+            }
             break
         case MessageType.StateMultiZone.rawValue:
-            if(!light.zones.hasRecentlyUpdatedFromClient()) {
-                let stateMultiZone = message.payload as! StateMultiZone
-                let zones = light.zones.value ?? MultiZones()
-                zones.dimTo(Int(stateMultiZone.count))
-                var i = 0
-                for z in Int(stateMultiZone.index) ..< min(Int(stateMultiZone.index) + stateMultiZone.color.count, zones.colors.count ?? 0) {
-                    zones.colors[z] = stateMultiZone.color[i]
-                    i += 1
+            if (!light.zones.hasRecentlyUpdatedFromClient()) {
+                if let stateMultiZone = message.payload as? StateMultiZone {
+                    let zones = light.zones.value ?? MultiZones()
+                    zones.dimTo(Int(stateMultiZone.count))
+                    var i = 0
+                    for z in Int(stateMultiZone.index)..<min(Int(stateMultiZone.index) + stateMultiZone.color.count, zones.colors.count ?? 0) {
+                        zones.colors[z] = stateMultiZone.color[i]
+                        i += 1
+                    }
+                    light.zones.updateFromDevice(value: zones)
                 }
-                light.zones.updateFromDevice(value: zones)
             }
             break
         case MessageType.StateZone.rawValue:
-            if(!light.zones.hasRecentlyUpdatedFromClient()) {
-                let stateZone = message.payload as! StateZone
-                let zones = light.zones.value ?? MultiZones()
-                zones.dimTo(Int(stateZone.count))
-                zones.colors[Int(stateZone.index)] = stateZone.color
-                light.zones.updateFromDevice(value: zones)
+            if (!light.zones.hasRecentlyUpdatedFromClient()) {
+                if let stateZone = message.payload as? StateZone {
+                    let zones = light.zones.value ?? MultiZones()
+                    zones.dimTo(Int(stateZone.count))
+                    zones.colors[Int(stateZone.index)] = stateZone.color
+                    light.zones.updateFromDevice(value: zones)
+                }
             }
         default:
             break
@@ -105,8 +117,8 @@ public class LightMessageHandler {
     }
 }
 
-extension UInt64{
-    func dateFromNanoSeconds() -> Date{
+extension UInt64 {
+    func dateFromNanoSeconds() -> Date {
         return Date(timeIntervalSince1970: Double(self / 1000000000))
     }
 }
