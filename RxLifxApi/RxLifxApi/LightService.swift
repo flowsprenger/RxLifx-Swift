@@ -26,6 +26,12 @@ public struct LightServiceConstants{
     public static let transportRetryTimeout = RxTimeInterval(5)
 }
 
+public protocol LightServiceExtension: LightsChangeDispatcher {
+    func start(source: LightSource)
+    func stop()
+    init(wrappedChangeDispatcher: LightsChangeDispatcher)
+}
+
 public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessageGenerator{
 
     public let source = arc4random()
@@ -47,8 +53,22 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
     private let mainScheduler: SchedulerType
     public let ioScheduler:SchedulerType
 
-    public init(lightsChangeDispatcher: LightsChangeDispatcher, transportGenerator: T.Type, mainScheduler:SchedulerType = MainScheduler.instance, ioScheduler: SchedulerType =  ConcurrentDispatchQueueScheduler(qos: .background)) {
-        self.lightsChangeDispatcher = lightsChangeDispatcher
+    private let extensions:[LightServiceExtension]
+
+    public init(
+            lightsChangeDispatcher: LightsChangeDispatcher,
+            transportGenerator: T.Type,
+            mainScheduler:SchedulerType = MainScheduler.instance,
+            ioScheduler: SchedulerType =  ConcurrentDispatchQueueScheduler(qos: .background),
+            extensionFactories: Array<LightServiceExtension.Type> = []
+    ) {
+        let (changeDispatcher, extensions) = extensionFactories.reduce((lightsChangeDispatcher, [LightServiceExtension]())) { (changeDispatcherExtensions, factory) -> (LightsChangeDispatcher, [LightServiceExtension]) in
+            let (changeDispatcher, extensions) = changeDispatcherExtensions
+            let ext = factory.init(wrappedChangeDispatcher: changeDispatcher)
+            return (ext, extensions + [ext])
+        }
+        self.extensions = extensions
+        self.lightsChangeDispatcher = changeDispatcher
         self.tick = Observable<Int>.interval(5, scheduler: mainScheduler).publish().refCount()
         self.mainScheduler = mainScheduler
         self.ioScheduler = ioScheduler
@@ -91,9 +111,16 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
         }))
 
         BroadcastGetServiceCommand.create(lightSource: self).fireAndForget()
+
+        extensions.forEach{ $0.start(source: self) }
+    }
+
+    public func extensionOf<E>() -> E? where E: LightServiceExtension {
+        return extensions.first{ $0 is E } as? E
     }
 
     public func stop() {
+        extensions.forEach{ $0.stop() }
         lights.forEach{ $0.value.dispose() }
         disposeBag.dispose()
     }
