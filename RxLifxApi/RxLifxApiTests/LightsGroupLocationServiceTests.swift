@@ -38,7 +38,8 @@ class LightsGroupLocationServiceTests: XCTestCase {
 
         lightChangeDispatcher = TestLightChangeDispatcher()
         groupLocationChangeDispatcher = TestGroupLocationChangeDispatcher()
-        lightGroupLocationService = LightsGroupLocationService(lightsChangeDispatcher: lightChangeDispatcher, groupLocationChangeDispatcher: groupLocationChangeDispatcher)
+        lightGroupLocationService = LightsGroupLocationService(wrappedChangeDispatcher: lightChangeDispatcher)
+        lightGroupLocationService.setListener(groupLocationChangeDispatcher: groupLocationChangeDispatcher)
         lightSource = SimpleTestLightSource()
         lightOne = Light(id: 1, lightSource: lightSource, lightChangeDispatcher: lightGroupLocationService)
         lightTwo = Light(id: 1, lightSource: lightSource, lightChangeDispatcher: lightGroupLocationService)

@@ -27,8 +27,15 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
 
-    let lightService:LightService = LightService(lightsChangeDispatcher: LightsGroupLocationService(lightsChangeDispatcher: LightsChangeNotificationDispatcher(), groupLocationChangeDispatcher: LightsGroupLocationChangeNotificationDispatcher()), transportGenerator: UdpTransport.self)
+    let lightService:LightService = LightService(lightsChangeDispatcher: LightsChangeNotificationDispatcher(), transportGenerator: UdpTransport.self, extensionFactories: [LightsGroupLocationService.self])
+    var lightsGroupLocationService: LightsGroupLocationService?
     var lights:[Light] = []
+
+    required init?(coder aDecoder: NSCoder) {
+        lightsGroupLocationService = lightService.extensionOf()
+        super.init(coder: aDecoder)
+        lightsGroupLocationService?.setListener(groupLocationChangeDispatcher: LightsGroupLocationChangeNotificationDispatcher())
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
