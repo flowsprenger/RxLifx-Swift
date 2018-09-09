@@ -146,27 +146,27 @@ public class LightsGroupLocationService: LightsChangeDispatcher, LightServiceExt
     }
 
     public func notifyChange(light: Light, property: LightPropertyName, oldValue: Any?, newValue: Any?) {
-        lightsChangeDispatcher.notifyChange(light: light, property: property, oldValue: oldValue, newValue: newValue)
         switch (property) {
         case LightPropertyName.group:
             if let locationId = light.location.value?.identifier, let groupId = (oldValue as? LightGroup)?.identifier, let location = locationsById[locationId], let group = location.groupsById[groupId] {
                 removeLightFromLocationGroup(light: light, location: location, group: group)
             }
-            addLightToLocationAndGroup(light: light)
+            addLightToLocationAndGroup(light: light, location: light.location.value, group: newValue as? LightGroup)
             break;
         case LightPropertyName.location:
             if let locationId = (oldValue as? LightLocation)?.identifier, let groupId = light.location.value?.identifier, let location = locationsById[locationId], let group = location.groupsById[groupId] {
                 removeLightFromLocationGroup(light: light, location: location, group: group)
             }
-            addLightToLocationAndGroup(light: light)
+            addLightToLocationAndGroup(light: light, location: newValue as? LightLocation, group: light.group.value )
             break;
         default:
             break;
         }
+        lightsChangeDispatcher.notifyChange(light: light, property: property, oldValue: oldValue, newValue: newValue)
     }
 
     public func lightAdded(light: Light) {
-        addLightToLocationAndGroup(light: light)
+        addLightToLocationAndGroup(light: light, location: light.location.value, group: light.group.value)
         lightsChangeDispatcher.lightAdded(light: light)
     }
 
@@ -181,8 +181,8 @@ public class LightsGroupLocationService: LightsChangeDispatcher, LightServiceExt
         }
     }
 
-    private func addLightToLocationAndGroup(light: Light) {
-        if let locationId = light.location.value?.identifier, let groupId = light.group.value?.identifier {
+    private func addLightToLocationAndGroup(light: Light, location: LightLocation?, group: LightGroup?) {
+        if let locationId = location?.identifier, let groupId = group?.identifier {
             let location: LightsLocation = locationsById[locationId] ?? add(location: LightsLocation(identifier: locationId))
             let group: LightsGroup = location.groupsById[groupId] ?? addGroupTo(location: location, group: LightsGroup(identifier: groupId, location: location))
             group.add(light: light)
