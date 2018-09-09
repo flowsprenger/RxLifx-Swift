@@ -50,7 +50,7 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
 
     private var lights:[UInt64:Light] = [:]
 
-    private let mainScheduler: SchedulerType
+    public let mainScheduler: SchedulerType
     public let ioScheduler:SchedulerType
 
     private let extensions:[LightServiceExtension]

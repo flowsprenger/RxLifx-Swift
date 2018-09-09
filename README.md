@@ -109,34 +109,67 @@ setColorCommand
 //     c) ackRequired is set and matching acknowledge message has been received
 ```
 
-Tracking group and location:
+## Extensions
+
+The functionality of LightService can be extended by passing a list of extensions types when instantiating it.
+
+#### Tracking group and location:
 ```swift
-// instead of passing the lights change dispatcher directly into LightsService 
-// decorate it using LightsGroupLocationService
-let lightGroupLocationService = LightsGroupLocationService(
-    lightsChangeDispatcher: LightsChangeNotificationDispatcher(), 
-    groupLocationChangeDispatcher: LightsGroupLocationChangeNotificationDispatcher()
-)
+// pass LightsGroupLocationService.self as an extension factory
 let lightService = LightService(
     lightsChangeDispatcher: groupsLocationService, 
-    transportGenerator: UdpTransport.self
+    transportGenerator: UdpTransport.self,
+    extensionFactories: [LightsGroupLocationService.self]
 )
+
+// after instantiation get a reference to the instatiated extension from LightService
+let lightsGroupLocationService: LightsGroupLocationService? = lightService.extensionOf()
+
+// (optional) set a delegate to listen for updates
+lightsGroupLocationService?.setListener(groupLocationChangeDispatcher: LightsGroupLocationChangeNotificationDispatcher())
 
 // you can either track all group and location updates through groupLocationChangeDispatcher 
 // or query the current state from your LightsGroupLocationService instance
 
 // get the location or group name for a light from LightsGroupLocationService 
 // instead of getting the raw value from a light
-lightGroupLocationService.locationOf(light: light).label
-lightGroupLocationService.groupOf(light: light).label
+lightGroupLocationService?.locationOf(light: light).label
+lightGroupLocationService?.groupOf(light: light).label
 
 // get all locations, groups, and lights through iteration
-lightGroupLocationService.locations.forEach { value in
+lightGroupLocationService?.locations.forEach { value in
     value.groups.forEach { group in
         group.lights.forEach { light in
             print(light)
         }
     }
+}
+```
+
+#### Support for Tile devices using TileService
+```swift
+// pass LightTileService.self as an extension factory
+let lightService = LightService(
+    lightsChangeDispatcher: groupsLocationService,
+    transportGenerator: UdpTransport.self,
+    extensionFactories: [LightTileService.self]
+)
+
+// after instantiation get a reference to the instatiated extension from LightService
+let tileService: LightTileService? = lightService.extensionOf()
+
+// (optional) set a delegate to listen for updates
+tileService?.setListener(listener: TileServiceListenerImplementation())
+
+// you can either track all group and location updates through the listener
+// or query the current state from your LightTileService instance
+
+// get access to the tile data for a light from LightTileService
+tileService?.tileOf(light: light)
+
+// get all tiles through iteration
+lightGroupLocationService?.tiles.forEach { value in
+
 }
 ```
 

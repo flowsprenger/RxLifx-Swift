@@ -25,6 +25,9 @@ public protocol LightSource {
     var tick: Observable<Int> { get }
     var source: UInt32 { get }
     var ioScheduler: SchedulerType { get }
+    var mainScheduler: SchedulerType { get }
+
+    func extensionOf<E>() -> E? where E: LightServiceExtension
 
     var messages: Observable<SourcedMessage> { get }
     func sendMessage(light: Light?, data: Data) -> Bool
@@ -67,6 +70,8 @@ public class Light: Equatable {
 
     public static let productsSupportingInfrared = [0, 29, 30, 45, 46]
 
+    public static let productsSupportingTile = [55]
+
     public lazy var color:LightProperty<HSBK> = { LightProperty<HSBK>(light: self, name: .color) }()
 
     public lazy var zones:LightProperty<MultiZones> = { LightProperty<MultiZones>(light: self, name: .zones) }()
@@ -106,6 +111,12 @@ public class Light: Equatable {
     public var supportsInfrared: Bool {
         get {
             return Light.productsSupportingInfrared.contains(Int(version.value?.product ?? 0))
+        }
+    }
+
+    public var supportsTile: Bool {
+        get {
+            return Light.productsSupportingTile.contains(Int(version.value?.product ?? 0))
         }
     }
 

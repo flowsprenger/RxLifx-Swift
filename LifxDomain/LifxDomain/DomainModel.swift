@@ -30,6 +30,7 @@ public class Header {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             size = try stream.readShort()
             protocolOriginTagged = try stream.readShort()
@@ -44,6 +45,7 @@ public class Header {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -93,12 +95,14 @@ public class StateService : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             service = Service(rawValue: try stream.readByte())
             port = try stream.readWord()
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -144,6 +148,7 @@ public class StateHostInfo : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             signal = try stream.readFloat()
             tx = try stream.readWord()
@@ -152,6 +157,7 @@ public class StateHostInfo : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -197,6 +203,7 @@ public class StateHostFirmware : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             build = try stream.readLong()
             reserved = try stream.readLong()
@@ -204,6 +211,7 @@ public class StateHostFirmware : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -250,6 +258,7 @@ public class StateWifiInfo : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             signal = try stream.readFloat()
             tx = try stream.readWord()
@@ -258,6 +267,7 @@ public class StateWifiInfo : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -303,6 +313,7 @@ public class StateWifiFirmware : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             build = try stream.readLong()
             reserved = try stream.readLong()
@@ -310,6 +321,7 @@ public class StateWifiFirmware : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -350,11 +362,13 @@ public class SetPower : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             level = try stream.readShort()
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -375,11 +389,13 @@ public class StatePower : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             level = try stream.readShort()
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -418,11 +434,13 @@ public class SetLabel : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             label = try stream.readString(size: 32)
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -443,11 +461,13 @@ public class StateLabel : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             label = try stream.readString(size: 32)
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -490,6 +510,7 @@ public class StateVersion : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             vendor = try stream.readWord()
             product = try stream.readWord()
@@ -497,6 +518,7 @@ public class StateVersion : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -541,6 +563,7 @@ public class StateInfo : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             time = try stream.readLong()
             uptime = try stream.readLong()
@@ -548,6 +571,7 @@ public class StateInfo : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -610,6 +634,7 @@ public class SetLocation : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             location = try stream.readArray(size: 16, generator:{stream in return try stream.readByte()})
             label = try stream.readString(size: 32)
@@ -617,6 +642,7 @@ public class SetLocation : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -643,6 +669,7 @@ public class StateLocation : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             location = try stream.readArray(size: 16, generator:{stream in return try stream.readByte()})
             label = try stream.readString(size: 32)
@@ -650,6 +677,7 @@ public class StateLocation : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -694,6 +722,7 @@ public class SetGroup : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             group = try stream.readArray(size: 16, generator:{stream in return try stream.readByte()})
             label = try stream.readString(size: 32)
@@ -701,6 +730,7 @@ public class SetGroup : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -727,6 +757,7 @@ public class StateGroup : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             group = try stream.readArray(size: 16, generator:{stream in return try stream.readByte()})
             label = try stream.readString(size: 32)
@@ -734,6 +765,7 @@ public class StateGroup : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -756,11 +788,13 @@ public class EchoRequest : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             payload = try stream.readArray(size: 64, generator:{stream in return try stream.readByte()})
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -781,11 +815,13 @@ public class EchoResponse : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             payload = try stream.readArray(size: 64, generator:{stream in return try stream.readByte()})
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -812,6 +848,7 @@ public class HSBK {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             hue = try stream.readShort()
             saturation = try stream.readShort()
@@ -820,6 +857,7 @@ public class HSBK {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -865,6 +903,7 @@ public class LightSetColor : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             reserved = try stream.readByte()
             color = try throwIfNil(guarded: HSBK(stream: stream))
@@ -872,6 +911,7 @@ public class LightSetColor : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -906,6 +946,7 @@ public class LightSetWaveform : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             reserved = try stream.readByte()
             transient = try stream.readByte()
@@ -917,6 +958,7 @@ public class LightSetWaveform : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -951,6 +993,7 @@ public class LightState : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             color = try throwIfNil(guarded: HSBK(stream: stream))
             reserved = try stream.readShort()
@@ -960,6 +1003,7 @@ public class LightState : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1004,6 +1048,7 @@ public class LightSetWaveformOptional : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             reserved = try stream.readByte()
             transient = try stream.readByte()
@@ -1019,6 +1064,7 @@ public class LightSetWaveformOptional : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1069,12 +1115,14 @@ public class LightSetPower : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             level = try stream.readShort()
             duration = try stream.readWord()
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1096,11 +1144,13 @@ public class LightStatePower : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             level = try stream.readShort()
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1139,11 +1189,13 @@ public class StateInfrared : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             brightness = try stream.readShort()
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1164,11 +1216,13 @@ public class SetInfrared : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             brightness = try stream.readShort()
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1197,6 +1251,7 @@ public class SetColorZones : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             start_index = try stream.readByte()
             end_index = try stream.readByte()
@@ -1206,6 +1261,7 @@ public class SetColorZones : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1232,12 +1288,14 @@ public class GetColorZones : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             start_index = try stream.readByte()
             end_index = try stream.readByte()
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1263,6 +1321,7 @@ public class StateZone : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             count = try stream.readByte()
             index = try stream.readByte()
@@ -1270,6 +1329,7 @@ public class StateZone : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
@@ -1296,6 +1356,7 @@ public class StateMultiZone : MessagePayload {
     }
 
     public init?(stream:DataInputStream){
+
         do{
             count = try stream.readByte()
             index = try stream.readByte()
@@ -1303,12 +1364,341 @@ public class StateMultiZone : MessagePayload {
         }catch{
             return nil
         }
+
     }
 
     public func emit(stream:DataOutputStream){
         stream.writeByte(value:count)
         stream.writeByte(value:index)
         stream.writeArray(value: color, writer:{color, stream in return color.emit(stream: stream)})
+    }
+
+}
+public class Tile {
+
+    public static let _size = 55
+    public let _size = 55
+    public let _type:UInt16 = 0
+
+    public var reserved0:UInt16
+    public var reserved1:UInt16
+    public var reserved2:UInt16
+    public var reserved3:UInt16
+    public var user_x:Float32
+    public var user_y:Float32
+    public var width:UInt8
+    public var height:UInt8
+    public var reserved4:UInt8
+    public var device_version_vendor:UInt32
+    public var device_version_product:UInt32
+    public var device_version_version:UInt32
+    public var firmware_build:UInt64
+    public var reserved5:UInt64
+    public var firmware_version:UInt32
+    public var reserved6:UInt32
+
+    public init(reserved0:UInt16, reserved1:UInt16, reserved2:UInt16, reserved3:UInt16, user_x:Float32, user_y:Float32, width:UInt8, height:UInt8, reserved4:UInt8, device_version_vendor:UInt32, device_version_product:UInt32, device_version_version:UInt32, firmware_build:UInt64, reserved5:UInt64, firmware_version:UInt32, reserved6:UInt32){
+        self.reserved0 = reserved0
+        self.reserved1 = reserved1
+        self.reserved2 = reserved2
+        self.reserved3 = reserved3
+        self.user_x = user_x
+        self.user_y = user_y
+        self.width = width
+        self.height = height
+        self.reserved4 = reserved4
+        self.device_version_vendor = device_version_vendor
+        self.device_version_product = device_version_product
+        self.device_version_version = device_version_version
+        self.firmware_build = firmware_build
+        self.reserved5 = reserved5
+        self.firmware_version = firmware_version
+        self.reserved6 = reserved6
+    }
+
+    public init?(stream:DataInputStream){
+
+        do{
+            reserved0 = try stream.readShort()
+            reserved1 = try stream.readShort()
+            reserved2 = try stream.readShort()
+            reserved3 = try stream.readShort()
+            user_x = try stream.readFloat()
+            user_y = try stream.readFloat()
+            width = try stream.readByte()
+            height = try stream.readByte()
+            reserved4 = try stream.readByte()
+            device_version_vendor = try stream.readWord()
+            device_version_product = try stream.readWord()
+            device_version_version = try stream.readWord()
+            firmware_build = try stream.readLong()
+            reserved5 = try stream.readLong()
+            firmware_version = try stream.readWord()
+            reserved6 = try stream.readWord()
+        }catch{
+            return nil
+        }
+
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeShort(value:reserved0)
+        stream.writeShort(value:reserved1)
+        stream.writeShort(value:reserved2)
+        stream.writeShort(value:reserved3)
+        stream.writeFloat(value:user_x)
+        stream.writeFloat(value:user_y)
+        stream.writeByte(value:width)
+        stream.writeByte(value:height)
+        stream.writeByte(value:reserved4)
+        stream.writeWord(value:device_version_vendor)
+        stream.writeWord(value:device_version_product)
+        stream.writeWord(value:device_version_version)
+        stream.writeLong(value:firmware_build)
+        stream.writeLong(value:reserved5)
+        stream.writeWord(value:firmware_version)
+        stream.writeWord(value:reserved6)
+    }
+
+}
+public class GetDeviceChain : MessagePayload {
+
+    public static let _size = 0
+    public let _size = 0
+    public let _type:UInt16 = 701
+
+
+    public init(){
+    }
+
+    public init?(stream:DataInputStream){
+
+    }
+
+    public func emit(stream:DataOutputStream){
+    }
+
+}
+public class StateDeviceChain : MessagePayload {
+
+    public static let _size = 882
+    public let _size = 882
+    public let _type:UInt16 = 702
+
+    public var start_index:UInt8
+    public var tile_devices:[Tile]
+    public var total_count:UInt8
+
+    public init(start_index:UInt8, tile_devices:[Tile], total_count:UInt8){
+        self.start_index = start_index
+        self.tile_devices = tile_devices
+        self.total_count = total_count
+    }
+
+    public init?(stream:DataInputStream){
+
+        do{
+            start_index = try stream.readByte()
+            tile_devices = try stream.readArray(size: 16, generator:{stream in return try throwIfNil(guarded: Tile(stream: stream))})
+            total_count = try stream.readByte()
+        }catch{
+            return nil
+        }
+
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeByte(value:start_index)
+        stream.writeArray(value: tile_devices, writer:{tile_devices, stream in return tile_devices.emit(stream: stream)})
+        stream.writeByte(value:total_count)
+    }
+
+}
+public class SetUserPosition : MessagePayload {
+
+    public static let _size = 11
+    public let _size = 11
+    public let _type:UInt16 = 703
+
+    public var tile_index:UInt8
+    public var reserved:UInt16
+    public var user_x:Float32
+    public var user_y:Float32
+
+    public init(tile_index:UInt8, reserved:UInt16, user_x:Float32, user_y:Float32){
+        self.tile_index = tile_index
+        self.reserved = reserved
+        self.user_x = user_x
+        self.user_y = user_y
+    }
+
+    public init?(stream:DataInputStream){
+
+        do{
+            tile_index = try stream.readByte()
+            reserved = try stream.readShort()
+            user_x = try stream.readFloat()
+            user_y = try stream.readFloat()
+        }catch{
+            return nil
+        }
+
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeByte(value:tile_index)
+        stream.writeShort(value:reserved)
+        stream.writeFloat(value:user_x)
+        stream.writeFloat(value:user_y)
+    }
+
+}
+public class GetTileState64 : MessagePayload {
+
+    public static let _size = 6
+    public let _size = 6
+    public let _type:UInt16 = 707
+
+    public var tile_index:UInt8
+    public var length:UInt8
+    public var reserved:UInt8
+    public var x:UInt8
+    public var y:UInt8
+    public var width:UInt8
+
+    public init(tile_index:UInt8, length:UInt8, reserved:UInt8, x:UInt8, y:UInt8, width:UInt8){
+        self.tile_index = tile_index
+        self.length = length
+        self.reserved = reserved
+        self.x = x
+        self.y = y
+        self.width = width
+    }
+
+    public init?(stream:DataInputStream){
+
+        do{
+            tile_index = try stream.readByte()
+            length = try stream.readByte()
+            reserved = try stream.readByte()
+            x = try stream.readByte()
+            y = try stream.readByte()
+            width = try stream.readByte()
+        }catch{
+            return nil
+        }
+
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeByte(value:tile_index)
+        stream.writeByte(value:length)
+        stream.writeByte(value:reserved)
+        stream.writeByte(value:x)
+        stream.writeByte(value:y)
+        stream.writeByte(value:width)
+    }
+
+}
+public class StateTileState64 : MessagePayload {
+
+    public static let _size = 517
+    public let _size = 517
+    public let _type:UInt16 = 711
+
+    public var tile_index:UInt8
+    public var reserved:UInt8
+    public var x:UInt8
+    public var y:UInt8
+    public var width:UInt8
+    public var colors:[HSBK]
+
+    public init(tile_index:UInt8, reserved:UInt8, x:UInt8, y:UInt8, width:UInt8, colors:[HSBK]){
+        self.tile_index = tile_index
+        self.reserved = reserved
+        self.x = x
+        self.y = y
+        self.width = width
+        self.colors = colors
+    }
+
+    public init?(stream:DataInputStream){
+
+        do{
+            tile_index = try stream.readByte()
+            reserved = try stream.readByte()
+            x = try stream.readByte()
+            y = try stream.readByte()
+            width = try stream.readByte()
+            colors = try stream.readArray(size: 64, generator:{stream in return try throwIfNil(guarded: HSBK(stream: stream))})
+        }catch{
+            return nil
+        }
+
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeByte(value:tile_index)
+        stream.writeByte(value:reserved)
+        stream.writeByte(value:x)
+        stream.writeByte(value:y)
+        stream.writeByte(value:width)
+        stream.writeArray(value: colors, writer:{colors, stream in return colors.emit(stream: stream)})
+    }
+
+}
+public class SetTileState64 : MessagePayload {
+
+    public static let _size = 522
+    public let _size = 522
+    public let _type:UInt16 = 715
+
+    public var tile_index:UInt8
+    public var length:UInt8
+    public var reserved:UInt8
+    public var x:UInt8
+    public var y:UInt8
+    public var width:UInt8
+    public var duration:UInt32
+    public var colors:[HSBK]
+
+    public init(tile_index:UInt8, length:UInt8, reserved:UInt8, x:UInt8, y:UInt8, width:UInt8, duration:UInt32, colors:[HSBK]){
+        self.tile_index = tile_index
+        self.length = length
+        self.reserved = reserved
+        self.x = x
+        self.y = y
+        self.width = width
+        self.duration = duration
+        self.colors = colors
+    }
+
+    public init?(stream:DataInputStream){
+
+        do{
+            tile_index = try stream.readByte()
+            length = try stream.readByte()
+            reserved = try stream.readByte()
+            x = try stream.readByte()
+            y = try stream.readByte()
+            width = try stream.readByte()
+            duration = try stream.readWord()
+            colors = try stream.readArray(size: 64, generator:{stream in return try throwIfNil(guarded: HSBK(stream: stream))})
+        }catch{
+            return nil
+        }
+
+    }
+
+    public func emit(stream:DataOutputStream){
+        stream.writeByte(value:tile_index)
+        stream.writeByte(value:length)
+        stream.writeByte(value:reserved)
+        stream.writeByte(value:x)
+        stream.writeByte(value:y)
+        stream.writeByte(value:width)
+        stream.writeWord(value:duration)
+        stream.writeArray(value: colors, writer:{colors, stream in return colors.emit(stream: stream)})
     }
 
 }
@@ -1382,6 +1772,12 @@ public enum MessageType : UInt16 {
     case GetColorZones = 502
     case StateZone = 503
     case StateMultiZone = 506
+    case GetDeviceChain = 701
+    case StateDeviceChain = 702
+    case SetUserPosition = 703
+    case GetTileState64 = 707
+    case StateTileState64 = 711
+    case SetTileState64 = 715
 }
 
 public let MessagePayloadFromType : [UInt16:(DataInputStream) -> MessagePayload?] = [
@@ -1429,4 +1825,10 @@ public let MessagePayloadFromType : [UInt16:(DataInputStream) -> MessagePayload?
     502 : { stream in GetColorZones(stream:stream) },
     503 : { stream in StateZone(stream:stream) },
     506 : { stream in StateMultiZone(stream:stream) },
+    701 : { stream in GetDeviceChain(stream:stream) },
+    702 : { stream in StateDeviceChain(stream:stream) },
+    703 : { stream in SetUserPosition(stream:stream) },
+    707 : { stream in GetTileState64(stream:stream) },
+    711 : { stream in StateTileState64(stream:stream) },
+    715 : { stream in SetTileState64(stream:stream) },
 ]

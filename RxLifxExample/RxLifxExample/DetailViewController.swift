@@ -35,6 +35,8 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var brightnessSlider: UISlider!
 
+    @IBOutlet weak var tileColorButton: UIButton!
+    
     private var viewHasInitialized: Bool = false
 
     @objc func configureView() {
@@ -53,6 +55,12 @@ class DetailViewController: UIViewController {
                 brightnessSlider.value = Float(color.brightness) / Float(UInt16.max)
 
                 background.backgroundColor = UIColor(cgColor: color.toCGColor())
+            }
+
+            if (detail.supportsTile) {
+                tileColorButton.isHidden = false
+            } else {
+                tileColorButton.isHidden = true
             }
         }
     }
@@ -100,17 +108,34 @@ class DetailViewController: UIViewController {
             LightSetPowerCommand.create(light: light, status: powerSwitch.isOn, duration: 0).fireAndForget()
         }
     }
-    
+
     @IBAction func blinkRed(_ sender: Any) {
         if let light = detailItem {
             LightSetWaveformCommand.create(light: light, transient: true, color: HSBK(hue: UInt16(0 * Float(UInt16.max)), saturation: UInt16(1 * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0), period: 1000, cycles: 1, skew_ratio: Int16(0.5 * Double(Int16.max)), waveform: WaveformType.SINE).fireAndForget()
         }
     }
+
     @IBAction func blinkBrightness(_ sender: Any) {
         if let light = detailItem {
-            LightSetWaveformOptionalCommand.create(light: light, transient: true, color: HSBK(hue: UInt16(1 * Float(UInt16.max)), saturation: UInt16(0.23 * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0), period: 1000, cycles: 1, skew_ratio: Int16(0.5 * Double(Int16.max)), waveform: WaveformType.SAW, set_hue: false, set_saturation: false, set_brightness:  true, set_kelvin: false).fireAndForget()
+            LightSetWaveformOptionalCommand.create(light: light, transient: true, color: HSBK(hue: UInt16(1 * Float(UInt16.max)), saturation: UInt16(0.23 * Float(UInt16.max)), brightness: UInt16(1 * Float(UInt16.max)), kelvin: 0), period: 1000, cycles: 1, skew_ratio: Int16(0.5 * Double(Int16.max)), waveform: WaveformType.SAW, set_hue: false, set_saturation: false, set_brightness: true, set_kelvin: false).fireAndForget()
         }
     }
 
+    @IBAction func colorTile(_ sender: Any) {
+
+        if let light = detailItem, let tileService:LightTileService = light.lightSource.extensionOf(), let tile = tileService.tileOf(light: light) {
+            let colors = stride(from: 0, to: 64, by: 1).map{ it in
+                HSBK(hue: UInt16(it * Int(UInt16.max) / 64), saturation: UInt16.max, brightness: UInt16.max / 2, kelvin: 0)
+            }
+
+            TileSetTileState64Command.create(
+                    tileService: tileService,
+                    light: tile.light,
+                    startIndex: 0,
+                    duration: 1,
+                    colors: colors
+            ).fireAndForget()
+        }
+    }
 }
 
