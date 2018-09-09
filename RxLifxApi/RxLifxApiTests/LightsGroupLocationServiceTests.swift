@@ -214,10 +214,19 @@ class SimpleTestLightSource: LightSource {
     let tick: Observable<Int> = PublishSubject<Int>()
     let source: UInt32 = 0
     let ioScheduler: SchedulerType = TestScheduler(initialClock:0)
+    let mainScheduler: SchedulerType
     let messages: Observable<SourcedMessage> = PublishSubject<SourcedMessage>()
+
+    init(){
+        mainScheduler = ioScheduler
+    }
 
     func sendMessage(light: Light?, data: Data) -> Bool {
         return true
+    }
+
+    func extensionOf<E>() -> E? where E: LightServiceExtension {
+        return nil
     }
 }
 

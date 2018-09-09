@@ -37,6 +37,10 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var tileColorButton: UIButton!
     
+    @IBOutlet weak var groupNameLabel: UILabel!
+    
+    @IBOutlet weak var locationNameLabel: UILabel!
+    
     private var viewHasInitialized: Bool = false
 
     @objc func configureView() {
@@ -61,6 +65,14 @@ class DetailViewController: UIViewController {
                 tileColorButton.isHidden = false
             } else {
                 tileColorButton.isHidden = true
+            }
+
+            if let groupService: LightsGroupLocationService = detail.lightSource.extensionOf(){
+                locationNameLabel.text = groupService.locationOf(light: detail)?.label
+                groupNameLabel.text = groupService.groupOf(light: detail)?.label
+            }else{
+                locationNameLabel.text = "???"
+                groupNameLabel.text = "???"
             }
         }
     }
