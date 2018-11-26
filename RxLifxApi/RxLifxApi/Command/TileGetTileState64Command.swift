@@ -1,6 +1,6 @@
 /*
 
-Copyright 2017 Florian Sprenger
+Copyright 2018 Florian Sprenger
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -17,14 +17,15 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
 */
 
-#import <Foundation/Foundation.h>
+import Foundation
+import LifxDomain
+import RxSwift
 
-//! Project version number for LifxDomain.
-FOUNDATION_EXPORT double LifxDomainVersionNumber;
-
-//! Project version string for LifxDomain.
-FOUNDATION_EXPORT const unsigned char LifxDomainVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <LifxDomain/PublicHeader.h>
-
-
+public class TileGetTileState64Command {
+    public class func create(light: Light, startIndex: UInt8 = 0, length: UInt8 = 255, x: UInt8 = 0, y: UInt8 = 0, width: UInt8 = 8, ackRequired: Bool = false, responseRequired: Bool = false) -> Observable<Result<StateTileState64>> {
+        let message = Message.createMessageWithPayload(GetTileState64(tile_index: UInt8(startIndex), length: length, reserved: 0, x: x, y: y, width: width), target: light.target, source: light.lightSource.source)
+        message.header.ackRequired = ackRequired
+        message.header.responseRequired = responseRequired
+        return AsyncLightCommand.sendMessage(lightSource: light.lightSource, light: light, message: message)
+    }
+}

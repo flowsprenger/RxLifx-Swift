@@ -37,6 +37,20 @@ class LightsChangeNotificationDispatcher: LightsChangeDispatcher {
 
 }
 
+class TileChangeDispatcher: TileServiceListener{
+    func tileAdded(tile: TileLight) {
+        print("tile added \(tile.light.id)")
+    }
+
+    func chainUpdated(tile: TileLight) {
+        print("chain updated \(tile.light.id)")
+    }
+
+    func deviceUpdated(tile: TileLight, device: TileDevice) {
+        print("device updated \(tile.light.id) \(device.index)")
+    }
+}
+
 class LightsGroupLocationChangeNotificationDispatcher: GroupLocationChangeDispatcher {
     func groupAdded(group: LightsGroup) {
         print("group added \(group.label)")

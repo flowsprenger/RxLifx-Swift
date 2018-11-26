@@ -14,10 +14,11 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '9.0'
   s.tvos.deployment_target = '9.0'
   s.watchos.deployment_target = '3.2'
+  s.macos.deployment_target = '10.11'
 
   s.source       = { :git => "https://github.com/flowsprenger/RxLifx-Swift.git" }
 
-  s.dependency 'RxSwift', '4.1.2'
+  s.dependency 'RxSwift', '4.2.0'
 
   s.source_files = 'RxLifx/RxLifx/*.{h,swift}'
 end

@@ -225,6 +225,7 @@ class TestLightSource: LightSource{
     let source: UInt32 = arc4random_uniform(UInt32.max)
     let messages: Observable<SourcedMessage>
     let ioScheduler: SchedulerType
+    let mainScheduler: SchedulerType
     let tickPublisher = PublishSubject<Int>()
     var sequence = 0
 
@@ -234,6 +235,7 @@ class TestLightSource: LightSource{
         self.messages = messages
         self.tick = tickPublisher
         self.ioScheduler = scheduler
+        self.mainScheduler = scheduler
     }
 
     func sendMessage(light: Light?, data: Data) -> Bool{
@@ -243,6 +245,10 @@ class TestLightSource: LightSource{
     func doTick(){
         sequence += 1
         tickPublisher.onNext(sequence)
+    }
+
+    func extensionOf<E>() -> E? where E: LightServiceExtension {
+        fatalError("extensionOf() has not been implemented")
     }
 }
 

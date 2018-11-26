@@ -38,7 +38,8 @@ class LightsGroupLocationServiceTests: XCTestCase {
 
         lightChangeDispatcher = TestLightChangeDispatcher()
         groupLocationChangeDispatcher = TestGroupLocationChangeDispatcher()
-        lightGroupLocationService = LightsGroupLocationService(lightsChangeDispatcher: lightChangeDispatcher, groupLocationChangeDispatcher: groupLocationChangeDispatcher)
+        lightGroupLocationService = LightsGroupLocationService(wrappedChangeDispatcher: lightChangeDispatcher)
+        lightGroupLocationService.setListener(groupLocationChangeDispatcher: groupLocationChangeDispatcher)
         lightSource = SimpleTestLightSource()
         lightOne = Light(id: 1, lightSource: lightSource, lightChangeDispatcher: lightGroupLocationService)
         lightTwo = Light(id: 1, lightSource: lightSource, lightChangeDispatcher: lightGroupLocationService)
@@ -213,10 +214,19 @@ class SimpleTestLightSource: LightSource {
     let tick: Observable<Int> = PublishSubject<Int>()
     let source: UInt32 = 0
     let ioScheduler: SchedulerType = TestScheduler(initialClock:0)
+    let mainScheduler: SchedulerType
     let messages: Observable<SourcedMessage> = PublishSubject<SourcedMessage>()
+
+    init(){
+        mainScheduler = ioScheduler
+    }
 
     func sendMessage(light: Light?, data: Data) -> Bool {
         return true
+    }
+
+    func extensionOf<E>() -> E? where E: LightServiceExtension {
+        return nil
     }
 }
 

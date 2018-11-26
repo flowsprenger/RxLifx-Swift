@@ -106,13 +106,14 @@ public protocol GroupLocationChangeDispatcher {
     func locationChanged(location: LightsLocation)
 }
 
-public class LightsGroupLocationService: LightsChangeDispatcher {
+public class LightsGroupLocationService: LightsChangeDispatcher, LightServiceExtension {
+
 
     private var locationsById: [String: LightsLocation] = [:]
 
     private let lightsChangeDispatcher: LightsChangeDispatcher
 
-    private var groupLocationChangeDispatcher: GroupLocationChangeDispatcher
+    private var groupLocationChangeDispatcher: GroupLocationChangeDispatcher?
 
     public var locations: Dictionary<String, LightsLocation>.Values {
         get{
@@ -120,9 +121,20 @@ public class LightsGroupLocationService: LightsChangeDispatcher {
         }
     }
 
-    public init(lightsChangeDispatcher: LightsChangeDispatcher, groupLocationChangeDispatcher: GroupLocationChangeDispatcher) {
-        self.lightsChangeDispatcher = lightsChangeDispatcher
+    public required init(wrappedChangeDispatcher: LightsChangeDispatcher) {
+        self.lightsChangeDispatcher = wrappedChangeDispatcher
+    }
+
+    public func setListener( groupLocationChangeDispatcher: GroupLocationChangeDispatcher?){
         self.groupLocationChangeDispatcher = groupLocationChangeDispatcher
+    }
+
+    public func start(source: LightSource) {
+
+    }
+
+    public func stop() {
+        locationsById = [:]
     }
 
     public func groupOf(light: Light) -> LightsGroup? {
@@ -134,33 +146,33 @@ public class LightsGroupLocationService: LightsChangeDispatcher {
     }
 
     public func notifyChange(light: Light, property: LightPropertyName, oldValue: Any?, newValue: Any?) {
-        lightsChangeDispatcher.notifyChange(light: light, property: property, oldValue: oldValue, newValue: newValue)
         switch (property) {
         case LightPropertyName.group:
             if let locationId = light.location.value?.identifier, let groupId = (oldValue as? LightGroup)?.identifier, let location = locationsById[locationId], let group = location.groupsById[groupId] {
                 removeLightFromLocationGroup(light: light, location: location, group: group)
             }
-            addLightToLocationAndGroup(light: light)
+            addLightToLocationAndGroup(light: light, location: light.location.value, group: newValue as? LightGroup)
             break;
         case LightPropertyName.location:
             if let locationId = (oldValue as? LightLocation)?.identifier, let groupId = light.location.value?.identifier, let location = locationsById[locationId], let group = location.groupsById[groupId] {
                 removeLightFromLocationGroup(light: light, location: location, group: group)
             }
-            addLightToLocationAndGroup(light: light)
+            addLightToLocationAndGroup(light: light, location: newValue as? LightLocation, group: light.group.value )
             break;
         default:
             break;
         }
+        lightsChangeDispatcher.notifyChange(light: light, property: property, oldValue: oldValue, newValue: newValue)
     }
 
     public func lightAdded(light: Light) {
-        addLightToLocationAndGroup(light: light)
+        addLightToLocationAndGroup(light: light, location: light.location.value, group: light.group.value)
         lightsChangeDispatcher.lightAdded(light: light)
     }
 
     private func removeLightFromLocationGroup(light: Light, location: LightsLocation, group: LightsGroup) {
         group.remove(light: light)
-        groupLocationChangeDispatcher.groupChanged(group: group)
+        groupLocationChangeDispatcher?.groupChanged(group: group)
         if (group.lights.count == 0) {
             removeGroupFrom(location: location, group: group)
         }
@@ -169,36 +181,36 @@ public class LightsGroupLocationService: LightsChangeDispatcher {
         }
     }
 
-    private func addLightToLocationAndGroup(light: Light) {
-        if let locationId = light.location.value?.identifier, let groupId = light.group.value?.identifier {
+    private func addLightToLocationAndGroup(light: Light, location: LightLocation?, group: LightGroup?) {
+        if let locationId = location?.identifier, let groupId = group?.identifier {
             let location: LightsLocation = locationsById[locationId] ?? add(location: LightsLocation(identifier: locationId))
             let group: LightsGroup = location.groupsById[groupId] ?? addGroupTo(location: location, group: LightsGroup(identifier: groupId, location: location))
             group.add(light: light)
-            groupLocationChangeDispatcher.groupChanged(group: group)
-            groupLocationChangeDispatcher.locationChanged(location: location)
+            groupLocationChangeDispatcher?.groupChanged(group: group)
+            groupLocationChangeDispatcher?.locationChanged(location: location)
         }
     }
 
     private func addGroupTo(location: LightsLocation, group: LightsGroup) -> LightsGroup {
         location.add(group: group)
-        groupLocationChangeDispatcher.groupAdded(group: group)
-        groupLocationChangeDispatcher.locationChanged(location: location)
+        groupLocationChangeDispatcher?.groupAdded(group: group)
+        groupLocationChangeDispatcher?.locationChanged(location: location)
         return group
     }
 
     private func removeGroupFrom(location: LightsLocation, group: LightsGroup) {
         location.remove(group: group)
-        groupLocationChangeDispatcher.groupRemoved(group: group)
+        groupLocationChangeDispatcher?.groupRemoved(group: group)
     }
 
     private func add(location: LightsLocation) -> LightsLocation {
         locationsById[location.identifier] = location
-        groupLocationChangeDispatcher.locationAdded(location: location)
+        groupLocationChangeDispatcher?.locationAdded(location: location)
         return location
     }
 
     private func remove(location: LightsLocation) {
         locationsById.removeValue(forKey: location.identifier)
-        groupLocationChangeDispatcher.locationRemoved(location: location)
+        groupLocationChangeDispatcher?.locationRemoved(location: location)
     }
 }

@@ -27,8 +27,18 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
 
-    let lightService:LightService = LightService(lightsChangeDispatcher: LightsGroupLocationService(lightsChangeDispatcher: LightsChangeNotificationDispatcher(), groupLocationChangeDispatcher: LightsGroupLocationChangeNotificationDispatcher()), transportGenerator: UdpTransport.self)
+    let lightService:LightService = LightService(lightsChangeDispatcher: LightsChangeNotificationDispatcher(), transportGenerator: UdpTransport.self, extensionFactories: [LightsGroupLocationService.self, LightTileService.self])
+    var lightsGroupLocationService: LightsGroupLocationService?
+    var tileService: LightTileService?
     var lights:[Light] = []
+
+    required init?(coder aDecoder: NSCoder) {
+        lightsGroupLocationService = lightService.extensionOf()
+        tileService = lightService.extensionOf()
+        super.init(coder: aDecoder)
+        lightsGroupLocationService?.setListener(groupLocationChangeDispatcher: LightsGroupLocationChangeNotificationDispatcher())
+        tileService?.setListener(listener: TileChangeDispatcher())
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +113,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     func configureCell(_ cell: UITableViewCell, withLight light: Light) {
         cell.textLabel!.text = light.label.value ?? light.id
-        cell.backgroundColor = light.color.value?.toUIColor()
+        
+        if let cgColor = light.color.value?.toCGColor() {
+            cell.backgroundColor = UIColor(cgColor:cgColor)
+        }
     }
 
 }
