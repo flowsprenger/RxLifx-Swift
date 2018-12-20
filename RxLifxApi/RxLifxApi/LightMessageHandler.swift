@@ -94,7 +94,7 @@ public class LightMessageHandler {
                     let zones = light.zones.value ?? MultiZones()
                     zones.dimTo(Int(stateMultiZone.count))
                     var i = 0
-                    for z in Int(stateMultiZone.index)..<min(Int(stateMultiZone.index) + stateMultiZone.color.count, zones.colors.count ?? 0) {
+                    for z in Int(stateMultiZone.index)..<min(Int(stateMultiZone.index) + stateMultiZone.color.count, zones.colors.count) {
                         zones.colors[z] = stateMultiZone.color[i]
                         i += 1
                     }

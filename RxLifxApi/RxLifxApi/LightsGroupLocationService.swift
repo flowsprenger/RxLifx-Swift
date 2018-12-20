@@ -87,9 +87,8 @@ public class LightsLocation {
         }.1
     }
 
-    fileprivate func add(group: LightsGroup) -> LightsGroup {
+    fileprivate func add(group: LightsGroup) {
         groupsById[group.identifier] = group
-        return group
     }
 
     fileprivate func remove(group: LightsGroup) {
