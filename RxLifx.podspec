@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/flowsprenger/RxLifx-Swift.git" }
 
-  s.dependency 'RxSwift', '4.2.0'
+  s.dependency 'RxSwift', '~> 4.2'
 
   s.source_files = 'RxLifx/RxLifx/*.{h,swift}'
 end
