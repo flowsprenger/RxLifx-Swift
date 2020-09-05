@@ -23,7 +23,7 @@ import RxLifx
 import LifxDomain
 
 public struct LightServiceConstants{
-    public static let transportRetryTimeout = RxTimeInterval(5)
+    public static let transportRetryTimeout = RxTimeInterval.seconds(5)
 }
 
 public protocol LightServiceExtension: LightsChangeDispatcher {

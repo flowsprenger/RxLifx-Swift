@@ -24,7 +24,7 @@ import RxSwift
 
 public class AsyncLightCommand{
 
-    static let TIMEOUT:RxTimeInterval = 5
+    static let TIMEOUT:RxTimeInterval = RxTimeInterval.seconds(5)
 
     public class func sendMessage<T>(lightSource: LightSource, light:Light?, message:Message, sideEffect: (() -> ())? = nil) -> Observable<Result<T>>{
         return Observable.create { subscriber in
