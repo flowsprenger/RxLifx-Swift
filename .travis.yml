@@ -2,9 +2,8 @@ language: objective-c
 
 os:
     - osx
-language: generic
 dist: trusty
-osx_image: xcode8.3
+osx_image: xcode12u
 
 script:
     - xcodebuild -version;
