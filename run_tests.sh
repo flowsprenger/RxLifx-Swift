@@ -4,7 +4,7 @@ carthage bootstrap
 
 CONFIGURATION=(Debug)
 BUILD_DIRECTORY="build"
-DESTINATION="platform=iOS Simulator,name=iPhone 5"
+DESTINATION="platform=iOS Simulator,name=iPhone 8"
 ACTION="test"
 WORKSPACE="RxLifx.xcworkspace"
 
