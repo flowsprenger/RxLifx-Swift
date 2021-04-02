@@ -17,7 +17,7 @@ xcodebuild -workspace "${WORKSPACE}" \
 		-configuration "${CONFIGURATION}" \
 		-derivedDataPath "${BUILD_DIRECTORY}" \
 		-destination "$DESTINATION" \
-		$ACTION | tee build/last-build-output.txt | xcpretty -c
+		$ACTION | tee build/last-build-output.txt
 
 SCHEME="RxLifxTests"
 
@@ -26,7 +26,7 @@ xcodebuild -workspace "${WORKSPACE}" \
 		-configuration "${CONFIGURATION}" \
 		-derivedDataPath "${BUILD_DIRECTORY}" \
 		-destination "$DESTINATION" \
-		$ACTION | tee build/last-build-output.txt | xcpretty -c
+		$ACTION | tee build/last-build-output.txt
 
 SCHEME="RxLifxApiTests"
 
@@ -35,4 +35,4 @@ xcodebuild -workspace "${WORKSPACE}" \
         -configuration "${CONFIGURATION}" \
         -derivedDataPath "${BUILD_DIRECTORY}" \
         -destination "$DESTINATION" \
-        $ACTION | tee build/last-build-output.txt | xcpretty -c
+        $ACTION | tee build/last-build-output.txt
