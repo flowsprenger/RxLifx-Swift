@@ -69,7 +69,7 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
         }
         self.extensions = extensions
         self.lightsChangeDispatcher = changeDispatcher
-        self.tick = Observable<Int>.interval(5, scheduler: mainScheduler).publish().refCount()
+        self.tick = Observable<Int>.interval(.seconds(5), scheduler: mainScheduler).publish().refCount()
         self.mainScheduler = mainScheduler
         self.ioScheduler = ioScheduler
 
@@ -77,8 +77,8 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
         legacyUdpTransport = transportGenerator.init(port: String(Header.LIFX_DEFAULT_PORT), generator: LightMessageGenerator())
 
         messages = Observable.of(
-                udpTransport.messages.retryWhen({ (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightServiceConstants.transportRetryTimeout, scheduler: ioScheduler)}}),
-                legacyUdpTransport.messages.retryWhen({ (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightServiceConstants.transportRetryTimeout, scheduler: ioScheduler)}})
+            udpTransport.messages.retry(when: { (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightServiceConstants.transportRetryTimeout, scheduler: ioScheduler)}}),
+            legacyUdpTransport.messages.retry(when: { (errors: Observable<Error>) in return errors.flatMap{ (error:Error) -> Observable<Int64> in Observable.timer(LightServiceConstants.transportRetryTimeout, scheduler: ioScheduler)}})
         ).merge().publish().refCount()
     }
 
@@ -86,8 +86,8 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
         disposeBag.dispose()
         disposeBag = CompositeDisposable()
         let _ = disposeBag.insert(
-                messages.subscribeOn(ioScheduler)
-                        .observeOn(mainScheduler)
+            messages.subscribe(on: ioScheduler)
+                .observe(on: mainScheduler)
                         .filter({ (message: SourcedMessage) in
                             return message.message.header.target != 0
                         })
@@ -130,7 +130,7 @@ public class LightService<T>: LightSource where T:Transport, T.TMG == LightMessa
     }
 
     private func broadcastStateServiceDelayed() -> Disposable {
-        return Observable<Int>.timer(1, period: nil, scheduler: self.ioScheduler).subscribe{ event in
+        return Observable<Int>.timer(.seconds(1), period: nil, scheduler: self.ioScheduler).subscribe{ event in
             switch(event){
             case .next(_):
                 BroadcastGetServiceCommand.create(lightSource: self).fireAndForget()

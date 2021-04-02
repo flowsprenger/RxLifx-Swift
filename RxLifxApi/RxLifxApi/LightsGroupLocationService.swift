@@ -51,7 +51,7 @@ public class LightsGroup {
     }
 
     fileprivate func remove(light: Light) {
-        if let index = lights.index(of: light) {
+        if let index = lights.firstIndex(of: light) {
             lights.remove(at: index)
         }
     }

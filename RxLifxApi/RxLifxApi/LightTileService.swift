@@ -88,7 +88,7 @@ public class LightTileService: LightServiceExtension {
             }
         })
 
-        _ = disposables.insert(source.messages.observeOn(source.mainScheduler).filter {
+        _ = disposables.insert(source.messages.observe(on: source.mainScheduler).filter {
             self.tilesById[$0.message.header.target] != nil
         }.subscribe(onNext: { message in
             switch (message.message.header.type) {
