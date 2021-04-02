@@ -1,5 +1,5 @@
 #!/bin/bash
-carthage bootstrap
+carthage bootstrap  --no-use-binaries --use-xcframeworks
 
 
 CONFIGURATION=(Debug)

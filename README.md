@@ -183,7 +183,7 @@ Very simple sample app using LifxDomain, RxLifx and RxLifxApi
 
 Checkout this repo and bootstrap dependencies using Carthage
 
-`carthage bootstrap`
+`carthage bootstrap --no-use-binaries --use-xcframeworks`
 
 Then build and deploy the project RxLifExample.
 
