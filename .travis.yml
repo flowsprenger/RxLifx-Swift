@@ -3,7 +3,7 @@ language: objective-c
 os:
     - osx
 dist: trusty
-osx_image: xcode12u
+osx_image: xcode12.4
 
 script:
     - xcodebuild -version;
