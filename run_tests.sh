@@ -1,10 +1,10 @@
 #!/bin/bash
-carthage bootstrap
+carthage bootstrap  --no-use-binaries --use-xcframeworks
 
 
 CONFIGURATION=(Debug)
 BUILD_DIRECTORY="build"
-DESTINATION="platform=iOS Simulator,name=iPhone 5"
+DESTINATION="platform=iOS Simulator,name=iPhone 8"
 ACTION="test"
 WORKSPACE="RxLifx.xcworkspace"
 
@@ -17,7 +17,7 @@ xcodebuild -workspace "${WORKSPACE}" \
 		-configuration "${CONFIGURATION}" \
 		-derivedDataPath "${BUILD_DIRECTORY}" \
 		-destination "$DESTINATION" \
-		$ACTION | tee build/last-build-output.txt | xcpretty -c
+		$ACTION | tee build/last-build-output.txt
 
 SCHEME="RxLifxTests"
 
@@ -26,7 +26,7 @@ xcodebuild -workspace "${WORKSPACE}" \
 		-configuration "${CONFIGURATION}" \
 		-derivedDataPath "${BUILD_DIRECTORY}" \
 		-destination "$DESTINATION" \
-		$ACTION | tee build/last-build-output.txt | xcpretty -c
+		$ACTION | tee build/last-build-output.txt
 
 SCHEME="RxLifxApiTests"
 
@@ -35,4 +35,4 @@ xcodebuild -workspace "${WORKSPACE}" \
         -configuration "${CONFIGURATION}" \
         -derivedDataPath "${BUILD_DIRECTORY}" \
         -destination "$DESTINATION" \
-        $ACTION | tee build/last-build-output.txt | xcpretty -c
+        $ACTION | tee build/last-build-output.txt

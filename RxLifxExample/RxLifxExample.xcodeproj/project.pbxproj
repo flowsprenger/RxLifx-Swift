@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,8 @@
 		10246EA11E4DD77800ED98C7 /* RxLifx.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10246E9F1E4DD77800ED98C7 /* RxLifx.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		10246EA31E4DD77800ED98C7 /* LifxDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10246EA21E4DD77800ED98C7 /* LifxDomain.framework */; };
 		10246EA41E4DD77800ED98C7 /* LifxDomain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10246EA21E4DD77800ED98C7 /* LifxDomain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		102D623926148E110072B226 /* RxSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102D621C26148D2F0072B226 /* RxSwift.xcframework */; };
+		102D623A26148E110072B226 /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 102D621C26148D2F0072B226 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		107C08B61E239A0B00552E9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107C08B51E239A0B00552E9F /* AppDelegate.swift */; };
 		107C08B91E239A0B00552E9F /* RxLifxExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 107C08B71E239A0B00552E9F /* RxLifxExample.xcdatamodeld */; };
 		107C08BB1E239A0B00552E9F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107C08BA1E239A0B00552E9F /* MasterViewController.swift */; };
@@ -20,8 +22,6 @@
 		107C08C51E239A0B00552E9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 107C08C31E239A0B00552E9F /* LaunchScreen.storyboard */; };
 		10DE9AB31E5B05F9007D0095 /* RxLifxApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9AB21E5B05F9007D0095 /* RxLifxApi.framework */; };
 		10DE9AB41E5B05F9007D0095 /* RxLifxApi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9AB21E5B05F9007D0095 /* RxLifxApi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		10DE9AB61E5B06DC007D0095 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9AB51E5B06DC007D0095 /* RxSwift.framework */; };
-		10DE9AB71E5B06DC007D0095 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9AB51E5B06DC007D0095 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DD1E1E8622D39B88FCDA7890 /* LightsChangeNotificationDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1AE0FAEF56BA8659D993 /* LightsChangeNotificationDispatcher.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,8 +32,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				10DE9AB71E5B06DC007D0095 /* RxSwift.framework in Embed Frameworks */,
 				10246EA41E4DD77800ED98C7 /* LifxDomain.framework in Embed Frameworks */,
+				102D623A26148E110072B226 /* RxSwift.xcframework in Embed Frameworks */,
 				10246EA11E4DD77800ED98C7 /* RxLifx.framework in Embed Frameworks */,
 				10DE9AB41E5B05F9007D0095 /* RxLifxApi.framework in Embed Frameworks */,
 			);
@@ -45,6 +45,7 @@
 /* Begin PBXFileReference section */
 		10246E9F1E4DD77800ED98C7 /* RxLifx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxLifx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		10246EA21E4DD77800ED98C7 /* LifxDomain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LifxDomain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		102D621C26148D2F0072B226 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxSwift.xcframework; path = ../Carthage/Build/RxSwift.xcframework; sourceTree = "<group>"; };
 		107C08B21E239A0B00552E9F /* RxLifxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxLifxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		107C08B51E239A0B00552E9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		107C08B81E239A0B00552E9F /* RxLifxExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RxLifxExample.xcdatamodel; sourceTree = "<group>"; };
@@ -55,7 +56,6 @@
 		107C08C41E239A0B00552E9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		107C08C61E239A0B00552E9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10DE9AB21E5B05F9007D0095 /* RxLifxApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxLifxApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		10DE9AB51E5B06DC007D0095 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = ../Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		DD1E1AE0FAEF56BA8659D993 /* LightsChangeNotificationDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightsChangeNotificationDispatcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,8 +64,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10DE9AB61E5B06DC007D0095 /* RxSwift.framework in Frameworks */,
 				10246EA31E4DD77800ED98C7 /* LifxDomain.framework in Frameworks */,
+				102D623926148E110072B226 /* RxSwift.xcframework in Frameworks */,
 				10DE9AB31E5B05F9007D0095 /* RxLifxApi.framework in Frameworks */,
 				10246EA01E4DD77800ED98C7 /* RxLifx.framework in Frameworks */,
 			);
@@ -110,7 +110,7 @@
 		107C08D01E239BDB00552E9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				10DE9AB51E5B06DC007D0095 /* RxSwift.framework */,
+				102D621C26148D2F0072B226 /* RxSwift.xcframework */,
 				10DE9AB21E5B05F9007D0095 /* RxLifxApi.framework */,
 				10246EA21E4DD77800ED98C7 /* LifxDomain.framework */,
 				10246E9F1E4DD77800ED98C7 /* RxLifx.framework */,
@@ -147,12 +147,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Florian Sprenger";
 				TargetAttributes = {
 					107C08B11E239A0B00552E9F = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = HSVZA7GLYN;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
@@ -160,7 +159,7 @@
 			};
 			buildConfigurationList = 107C08AD1E239A0B00552E9F /* Build configuration list for PBXProject "RxLifxExample" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -246,6 +245,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -266,6 +266,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -291,7 +292,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -305,6 +306,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -325,6 +327,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -344,10 +347,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -357,17 +361,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = HSVZA7GLYN;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = RxLifxExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = wo.lf.RxLifxExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -375,17 +382,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = HSVZA7GLYN;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = RxLifxExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = wo.lf.RxLifxExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

@@ -21,28 +21,28 @@ import Foundation
 import CoreGraphics
 
 public extension Header {
-    public static let LIFX_DEFAULT_PORT: UInt16 = 56700
-    public static let LIFX_PROTOCOL: UInt16 = 1024
-    public static let RESPONSE_REQUIRED: UInt8 = 0x1;
-    public static let ACK_REQUIRED: UInt8 = 0x2;
+    static let LIFX_DEFAULT_PORT: UInt16 = 56700
+    static let LIFX_PROTOCOL: UInt16 = 1024
+    static let RESPONSE_REQUIRED: UInt8 = 0x1;
+    static let ACK_REQUIRED: UInt8 = 0x2;
 
-    public var id: String {
+    var id: String {
         get {
             return self.target.toLightId()
         }
     }
 
-    public func setBroadcast() {
+    func setBroadcast() {
         self.target = 0
         self.protocolOriginTagged = Header.LIFX_PROTOCOL | UInt16(1 << 13) | UInt16(1 << 12)
     }
 
-    public func setTarget(target: UInt64) {
+    func setTarget(target: UInt64) {
         self.target = target
         self.protocolOriginTagged = Header.LIFX_PROTOCOL | UInt16(1 << 12)
     }
 
-    public var responseRequired: Bool {
+    var responseRequired: Bool {
         get {
             return (flags & Header.RESPONSE_REQUIRED) != 0
         }
@@ -55,7 +55,7 @@ public extension Header {
         }
     }
 
-    public var ackRequired: Bool {
+    var ackRequired: Bool {
         get {
             return (flags & Header.ACK_REQUIRED) != 0
         }

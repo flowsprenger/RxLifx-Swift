@@ -2,11 +2,10 @@ language: objective-c
 
 os:
     - osx
-language: generic
 dist: trusty
-osx_image: xcode8.3
+osx_image: xcode12.4
 
 script:
     - xcodebuild -version;
       xcodebuild -showsdks;
-      ./run_tests.sh;
+      travis_wait 60 ./run_tests.sh;
