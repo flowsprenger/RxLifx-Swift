@@ -189,6 +189,10 @@ Then build and deploy the project RxLifExample.
 
 ### Integrate into your own project/app
 
+#### SPM
+
+Add https://github.com/flowsprenger/RxLifx-Swift as a swift package manager dependency.
+
 #### Carthage
 
 Add the following to your Cartfile to get a specific commit
@@ -201,7 +205,15 @@ Mix and match your frameworks using `Linked frameworks and Libraries`
 
 ## External Dependencies
 
-RxSwift, Swift 4
+RxSwift 6.2.0, Swift 5
+
+## Multicast Networking Entitlement
+
+As of iOS 14.6, the Multicast Networking entitlement is required for light discovery to work correctly. This requires adding the com.apple.developer.networking.multicast key/value to the project .entitlement file. It also requires special permission from Apple, linked to your developer account, that can be requested here: https://developer.apple.com/contact/request/networking-multicast
+
+In your request you must include specifics for how you plan to use the entitlement, including the discovery broadcast address/port (255.255.255.255:56700). Note that it may take 2 weeks for approval to be granted.
+
+More details can be found here: https://developer.apple.com/forums/thread/663271
 
 ## Known issues/limitations
 
