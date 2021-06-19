@@ -7,12 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10246EA01E4DD77800ED98C7 /* RxLifx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10246E9F1E4DD77800ED98C7 /* RxLifx.framework */; };
-		10246EA11E4DD77800ED98C7 /* RxLifx.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10246E9F1E4DD77800ED98C7 /* RxLifx.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		10246EA31E4DD77800ED98C7 /* LifxDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10246EA21E4DD77800ED98C7 /* LifxDomain.framework */; };
-		10246EA41E4DD77800ED98C7 /* LifxDomain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10246EA21E4DD77800ED98C7 /* LifxDomain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		102D623926148E110072B226 /* RxSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 102D621C26148D2F0072B226 /* RxSwift.xcframework */; };
-		102D623A26148E110072B226 /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 102D621C26148D2F0072B226 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		100DB367267E109300180397 /* RxLifxApi in Frameworks */ = {isa = PBXBuildFile; productRef = 100DB366267E109300180397 /* RxLifxApi */; };
+		100DB369267E109300180397 /* RxLifx in Frameworks */ = {isa = PBXBuildFile; productRef = 100DB368267E109300180397 /* RxLifx */; };
+		100DB36B267E109300180397 /* LifxDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 100DB36A267E109300180397 /* LifxDomain */; };
 		107C08B61E239A0B00552E9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107C08B51E239A0B00552E9F /* AppDelegate.swift */; };
 		107C08B91E239A0B00552E9F /* RxLifxExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 107C08B71E239A0B00552E9F /* RxLifxExample.xcdatamodeld */; };
 		107C08BB1E239A0B00552E9F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107C08BA1E239A0B00552E9F /* MasterViewController.swift */; };
@@ -20,8 +17,6 @@
 		107C08C01E239A0B00552E9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 107C08BE1E239A0B00552E9F /* Main.storyboard */; };
 		107C08C21E239A0B00552E9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 107C08C11E239A0B00552E9F /* Assets.xcassets */; };
 		107C08C51E239A0B00552E9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 107C08C31E239A0B00552E9F /* LaunchScreen.storyboard */; };
-		10DE9AB31E5B05F9007D0095 /* RxLifxApi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9AB21E5B05F9007D0095 /* RxLifxApi.framework */; };
-		10DE9AB41E5B05F9007D0095 /* RxLifxApi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE9AB21E5B05F9007D0095 /* RxLifxApi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DD1E1E8622D39B88FCDA7890 /* LightsChangeNotificationDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1E1AE0FAEF56BA8659D993 /* LightsChangeNotificationDispatcher.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,10 +27,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				10246EA41E4DD77800ED98C7 /* LifxDomain.framework in Embed Frameworks */,
-				102D623A26148E110072B226 /* RxSwift.xcframework in Embed Frameworks */,
-				10246EA11E4DD77800ED98C7 /* RxLifx.framework in Embed Frameworks */,
-				10DE9AB41E5B05F9007D0095 /* RxLifxApi.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -43,9 +34,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		10246E9F1E4DD77800ED98C7 /* RxLifx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxLifx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		10246EA21E4DD77800ED98C7 /* LifxDomain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LifxDomain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		102D621C26148D2F0072B226 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxSwift.xcframework; path = ../Carthage/Build/RxSwift.xcframework; sourceTree = "<group>"; };
+		100DB364267E0FA400180397 /* RxLifx-Swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "RxLifx-Swift"; path = ..; sourceTree = "<group>"; };
 		107C08B21E239A0B00552E9F /* RxLifxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxLifxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		107C08B51E239A0B00552E9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		107C08B81E239A0B00552E9F /* RxLifxExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RxLifxExample.xcdatamodel; sourceTree = "<group>"; };
@@ -55,7 +44,6 @@
 		107C08C11E239A0B00552E9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		107C08C41E239A0B00552E9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		107C08C61E239A0B00552E9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		10DE9AB21E5B05F9007D0095 /* RxLifxApi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxLifxApi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD1E1AE0FAEF56BA8659D993 /* LightsChangeNotificationDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightsChangeNotificationDispatcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,10 +52,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10246EA31E4DD77800ED98C7 /* LifxDomain.framework in Frameworks */,
-				102D623926148E110072B226 /* RxSwift.xcframework in Frameworks */,
-				10DE9AB31E5B05F9007D0095 /* RxLifxApi.framework in Frameworks */,
-				10246EA01E4DD77800ED98C7 /* RxLifx.framework in Frameworks */,
+				100DB36B267E109300180397 /* LifxDomain in Frameworks */,
+				100DB367267E109300180397 /* RxLifxApi in Frameworks */,
+				100DB369267E109300180397 /* RxLifx in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,9 +64,9 @@
 		107C08A91E239A0B00552E9F = {
 			isa = PBXGroup;
 			children = (
+				100DB364267E0FA400180397 /* RxLifx-Swift */,
 				107C08B41E239A0B00552E9F /* RxLifxExample */,
 				107C08B31E239A0B00552E9F /* Products */,
-				107C08D01E239BDB00552E9F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,17 +94,6 @@
 			path = RxLifxExample;
 			sourceTree = "<group>";
 		};
-		107C08D01E239BDB00552E9F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				102D621C26148D2F0072B226 /* RxSwift.xcframework */,
-				10DE9AB21E5B05F9007D0095 /* RxLifxApi.framework */,
-				10246EA21E4DD77800ED98C7 /* LifxDomain.framework */,
-				10246E9F1E4DD77800ED98C7 /* RxLifx.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -128,7 +104,6 @@
 				107C08AE1E239A0B00552E9F /* Sources */,
 				107C08AF1E239A0B00552E9F /* Frameworks */,
 				107C08B01E239A0B00552E9F /* Resources */,
-				107C08D71E239C8600552E9F /* Run Script */,
 				10246E9E1E4DD72200ED98C7 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -136,6 +111,11 @@
 			dependencies = (
 			);
 			name = RxLifxExample;
+			packageProductDependencies = (
+				100DB366267E109300180397 /* RxLifxApi */,
+				100DB368267E109300180397 /* RxLifx */,
+				100DB36A267E109300180397 /* LifxDomain */,
+			);
 			productName = RxLifxExample;
 			productReference = 107C08B21E239A0B00552E9F /* RxLifxExample.app */;
 			productType = "com.apple.product-type.application";
@@ -166,6 +146,9 @@
 				Base,
 			);
 			mainGroup = 107C08A91E239A0B00552E9F;
+			packageReferences = (
+				100DB365267E109300180397 /* XCRemoteSwiftPackageReference "RxLifx-Swift" */,
+			);
 			productRefGroup = 107C08B31E239A0B00552E9F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -187,24 +170,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		107C08D71E239C8600552E9F /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/../Carthage/Build/iOS/RxSwift.framework",
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		107C08AE1E239A0B00552E9F /* Sources */ = {
@@ -421,6 +386,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		100DB365267E109300180397 /* XCRemoteSwiftPackageReference "RxLifx-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/flowsprenger/RxLifx-Swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		100DB366267E109300180397 /* RxLifxApi */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 100DB365267E109300180397 /* XCRemoteSwiftPackageReference "RxLifx-Swift" */;
+			productName = RxLifxApi;
+		};
+		100DB368267E109300180397 /* RxLifx */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 100DB365267E109300180397 /* XCRemoteSwiftPackageReference "RxLifx-Swift" */;
+			productName = RxLifx;
+		};
+		100DB36A267E109300180397 /* LifxDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 100DB365267E109300180397 /* XCRemoteSwiftPackageReference "RxLifx-Swift" */;
+			productName = LifxDomain;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		107C08B71E239A0B00552E9F /* RxLifxExample.xcdatamodeld */ = {
