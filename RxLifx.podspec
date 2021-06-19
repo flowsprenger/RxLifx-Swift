@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RxLifx"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
 
   s.summary      = "Networking code to communicate with LIFX lights on the local LAN using UDP packets."
   s.description  = <<-DESC

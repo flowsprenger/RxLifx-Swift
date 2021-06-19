@@ -1,7 +1,7 @@
 # RxLifx-Swift
 [![Build Status](https://travis-ci.org/flowsprenger/RxLifx-Swift.svg?branch=master)](https://travis-ci.org/flowsprenger/RxLifx-Swift)
 
-A bundle of libraries that can be utilised to communicate with local LIFX lights using reactive programming and Swift 4.
+A bundle of libraries that can be utilised to communicate with local LIFX lights using reactive programming and Swift 5.
 
 Individual libraries can be mixed and matched based on use case and preference.
 
@@ -181,11 +181,7 @@ Very simple sample app using LifxDomain, RxLifx and RxLifxApi
 
 ### RxLifxExample
 
-Checkout this repo and bootstrap dependencies using Carthage
-
-`carthage bootstrap --no-use-binaries --use-xcframeworks`
-
-Then build and deploy the project RxLifExample.
+Checkout this repo and open RxLifx.xcworkspace
 
 ### Integrate into your own project/app
 
@@ -193,15 +189,7 @@ Then build and deploy the project RxLifExample.
 
 Add https://github.com/flowsprenger/RxLifx-Swift as a swift package manager dependency.
 
-#### Carthage
-
-Add the following to your Cartfile to get a specific commit
-
-`github "flowsprenger/RxLifx-Swift" "commithash"`
-
-Run `carthage update` to fetch dependencies into `Carthage/Checkouts` folder.
-
-Mix and match your frameworks using `Linked frameworks and Libraries`
+You might be able to still use Carthage or Cocoapods, but I am not sure and won't test/support these anymore. SPM is just too convenient. I strongly suggest to consume this as a Swift package now.
 
 ## External Dependencies
 
