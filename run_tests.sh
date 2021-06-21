@@ -1,3 +1,3 @@
 #!/bin/bash
 swift build
-swift test
+TEST=1 swift test
