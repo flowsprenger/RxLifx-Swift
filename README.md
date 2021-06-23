@@ -1,7 +1,7 @@
 # RxLifx-Swift
 [![Build Status](https://travis-ci.org/flowsprenger/RxLifx-Swift.svg?branch=master)](https://travis-ci.org/flowsprenger/RxLifx-Swift)
 
-A bundle of libraries that can be utilised to communicate with local LIFX lights using reactive programming and Swift 4.
+A bundle of libraries that can be utilised to communicate with local LIFX lights using reactive programming and Swift 5.
 
 Individual libraries can be mixed and matched based on use case and preference.
 
@@ -181,27 +181,27 @@ Very simple sample app using LifxDomain, RxLifx and RxLifxApi
 
 ### RxLifxExample
 
-Checkout this repo and bootstrap dependencies using Carthage
-
-`carthage bootstrap --no-use-binaries --use-xcframeworks`
-
-Then build and deploy the project RxLifExample.
+Checkout this repo and open RxLifx.xcworkspace
 
 ### Integrate into your own project/app
 
-#### Carthage
+#### SPM
 
-Add the following to your Cartfile to get a specific commit
+Add https://github.com/flowsprenger/RxLifx-Swift as a swift package manager dependency.
 
-`github "flowsprenger/RxLifx-Swift" "commithash"`
-
-Run `carthage update` to fetch dependencies into `Carthage/Checkouts` folder.
-
-Mix and match your frameworks using `Linked frameworks and Libraries`
+You might be able to still use Carthage or Cocoapods, but I am not sure and won't test/support these anymore. SPM is just too convenient. I strongly suggest to consume this as a Swift package now.
 
 ## External Dependencies
 
-RxSwift, Swift 4
+RxSwift 6.2.0, Swift 5
+
+## Multicast Networking Entitlement
+
+As of iOS 14.6, the Multicast Networking entitlement is required for light discovery to work correctly. This requires adding the com.apple.developer.networking.multicast key/value to the project .entitlement file. It also requires special permission from Apple, linked to your developer account, that can be requested here: https://developer.apple.com/contact/request/networking-multicast
+
+In your request you must include specifics for how you plan to use the entitlement, including the discovery broadcast address/port (255.255.255.255:56700). Note that it may take 2 weeks for approval to be granted.
+
+More details can be found here: https://developer.apple.com/forums/thread/663271
 
 ## Known issues/limitations
 

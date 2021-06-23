@@ -85,7 +85,7 @@ class DataInputStreamTests: XCTestCase {
 
         let stream = DataInputStream(data: data)
 
-        let stringRead = try stream.readString(size: string.characters.count)
+        let stringRead = try stream.readString(size: string.count)
         XCTAssertEqual(string, stringRead)
     }
 

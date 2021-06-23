@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "LifxDomain"
-  s.version      = "0.0.1"
+  s.version      = "0.0.3"
 
   s.summary      = "LIFX Message definition and (de)serialization code for integration with your own code. Has no external dependencies."
   s.description  = <<-DESC
